@@ -66,7 +66,7 @@ int Window::load_gl(void)
 					GL_LINEAR);
 
 	std::ifstream in;
-	int vs_id, fs_id, prog_id;
+	int vs_id, fs_id;
 	int vs_len, fs_len;
 	char *vs, *fs;
 	int success;
