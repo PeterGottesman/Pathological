@@ -1,6 +1,6 @@
 SOURCES=$(wildcard src/*.cpp)
 OBJS=$(SOURCES:src/%.cpp=build/%.o)
-EXEC=raytrace
+EXEC=pathological
 
 LIBS=glfw3 glew 
 
