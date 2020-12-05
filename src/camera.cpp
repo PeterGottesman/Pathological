@@ -3,6 +3,7 @@
 #include "camera.h"
 #include "vec3.h"
 #include "ray.h"
+#include "scene.h"
 
 Color Camera::calc_pix(int x, int y) const
 {
