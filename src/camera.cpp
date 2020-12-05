@@ -12,7 +12,7 @@ Color Camera::calc_pix(int x, int y) const
 	Hit hit;
 
 	ip_coords = Vec3((float)x/width, (float)y/height, 0);
-	ip_coords = ip_coords + Vec3(-0.5, -0.5, 0);
+	ip_coords += Vec3(-0.5, -0.5, 0);
 
 	// TODO: Mat4, Vec3*Mat4
 	ray_dir = ip_coords.x * x_axis
@@ -28,15 +28,15 @@ Color Camera::calc_pix(int x, int y) const
 	{
 		if (nearest_hit(ray, hit))
 		{
-			col = col + hit.mat->sample(this->scene, hit.pos, hit.norm, ray.max_depth)/(float)iters;
+			col += hit.mat->sample(this->scene, hit.pos, hit.norm, ray.max_depth);
 		}
 		else
 		{
-			col = col + Color{0.1, 0.3, 0.2}/(float)iters;
+			col += Color{0.1, 0.3, 0.2};
 		}
 	}
 
-	return col;
+	return col/(float)iters;
 }
 
 Color *Camera::render_image()
@@ -48,7 +48,8 @@ Color *Camera::render_image()
 		for (unsigned x = 0; x < width; ++x)
 		{
 			int idx = y*width + x;
-			image[idx] = ((iter-1) * image[idx])/iter + calc_pix(x, y)/iter;
+			image[idx] = ((iter-1) * image[idx]
+						  + calc_pix(x, y))/(float)iter;
 		}
 	}
 	iter++;

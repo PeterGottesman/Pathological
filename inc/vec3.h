@@ -60,6 +60,31 @@ struct Vec3
 		return Vec3(this->x+a.x, this->y+a.y, this->z+a.z);
 	}
 
+	Vec3 operator-=(const Vec3 &a)
+	{
+		return (*this = *this - a);
+	}
+
+	Vec3 operator+=(const Vec3 &a)
+	{
+		return (*this = *this + a);
+	}
+
+	Vec3 operator*=(const Vec3 &a)
+	{
+		return (*this = *this * a);
+	}
+
+	Vec3 operator*=(const float &a)
+	{
+		return (*this = *this * a);
+	}
+
+	Vec3 operator/=(const float &a)
+	{
+		return (*this = *this / a);
+	}
+
 	// Static Vector methods
 	static float dot(const Vec3 &a, const Vec3 &b)
 	{
