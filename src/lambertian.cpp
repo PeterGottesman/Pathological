@@ -6,16 +6,10 @@
 #include "vec3.h"
 #include "material.h"
 #include "scene.h"
+#include "randgen.h"
 
-// TODO: encapsulate hemisphere sampling
-#include <random>
-#include <chrono>
-std::mt19937 rnd(std::chrono::system_clock::now().time_since_epoch().count());
-
-static float rand_uniform(void)
-{
-	return (float)(rnd() - rnd.min()) / (float)(rnd.max() - rnd.min());
-}
+unsigned seed;
+RandGen r = RandGen::rand_dev_seeded_generator(seed);
 
 static Vec3 sample_hemisphere_uniform(const Vec3 &norm)
 {
@@ -33,8 +27,8 @@ static Vec3 sample_hemisphere_uniform(const Vec3 &norm)
 
 	// http://www.pbr-book.org/3ed-2018/Monte_Carlo_Integration/2D_Sampling_with_Multidimensional_Transformations.html
 
-	float theta = 2 * M_PI * rand_uniform();
-	float cos_phi = rand_uniform(); // phi = acos(cos_phi)
+	float theta = 2 * M_PI * r.uniform();
+	float cos_phi = r.uniform(); // phi = acos(cos_phi)
 
 	// Shortcut spherical to cartesian using sin(acos(x)) = sqrt(1 - x*x)
 	float sin_phi = std::sqrt(std::max(0.0, 1.0 - cos_phi * cos_phi));
