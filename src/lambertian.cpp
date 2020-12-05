@@ -89,12 +89,7 @@ Color Lambertian::sample(const Scene &sc,
 	if (cos_theta > 1e-3 && sc.nearest_hit(r, h))
 	{
 		Color light_in = h.mat->sample(sc, h.pos, h.norm, r.max_depth);
-		// std::cout << "incoming light is: " << light_in << std::endl;
 		diffuse = (light_in * brdf * cos_theta)/prob; 
-		// std::cout << r.direction << "." << norm << " = " << cos_theta << std::endl;
-		// std::cout << "diffuse = " << diffuse << " = "<< light_in << " * "
-		// 		  << brdf << " * " << cos_theta << ") / "
-		// 		  << prob << std::endl;
 	}
 
 	// return r.direction;

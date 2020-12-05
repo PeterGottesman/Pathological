@@ -29,8 +29,6 @@ bool Scene::nearest_hit(const Ray &r, Hit &h) const
 		}
 	}
 
-	// if (didhit)
-	// 	std::cout << "nearest hit was: " << min_d << std::endl;
 	return didhit;
 	
 }

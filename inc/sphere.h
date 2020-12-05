@@ -43,7 +43,6 @@ public:
 			h.mat = mat;
 			h.pos = r.origin + r.direction * h.dist;
 			h.norm = Vec3::normalize(h.pos - center);
-			// std::cout << h.dist << std::endl;
 			return h.dist > 0;
 		}
 

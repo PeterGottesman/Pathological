@@ -40,7 +40,6 @@ public:
 
 			hfov = M_PI/180.0 * fov;
 			vfov = 2 * std::atan2(std::tan((float)hfov/2), aspect);
-			// std::cout << "hfov: " << hfov << " vfov: " << vfov << std::endl;
 
 			// Create image plane
 			image = new Color[width*height]{0};
@@ -73,9 +72,5 @@ public:
 			Vec3::cross(this->dir, this->up)
 			);
 		this->y_axis = Vec3::normalize(up);
-		// std::cout << "dir vec " << this->dir << std::endl;
-		// std::cout << "up vec" << this->up << std::endl;
-		// std::cout << "x-axis unit vec " << this->x_axis << std::endl;
-		// std::cout << "y-axis unit vec " << this->y_axis << std::endl;
 	}
 };
