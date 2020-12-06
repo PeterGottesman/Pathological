@@ -14,15 +14,15 @@ int main(int argc, char **argv)
 	Window win(WIDTH, HEIGHT, "Nifty stuff");
 	int width = win.get_width();
 	int height = win.get_height();
-	width = height = 500;
 
-	Pathological app;
+	Pathological app(width, height);
 	void *pixels = app.get_texture();
 	std::thread app_thread(&Pathological::run, &app);
 
 	while (!win.should_quit())
 	{
 		win.display_texture(width, height, (char *)pixels);
+
 		// Update display at 15 FPS
 		std::this_thread::sleep_for(
 			std::chrono::duration<float, std::ratio<1, 1>>(1.0/15.0));

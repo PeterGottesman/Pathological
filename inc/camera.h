@@ -11,8 +11,12 @@ class Scene;
 
 class Camera
 {
+	const Vec3 lower_left = {-0.5, -0.5, 0};
+	Vec3 pix_size;
+
 	Scene &scene;
 	Color *image = nullptr;
+	unsigned *iters = nullptr;
 
 	Vec3 location;				// Coordinates of camera in world
 								// space
@@ -34,11 +38,10 @@ public:
 	Camera(Scene &scene, Vec3 loc, Vec3 look,
 		   Vec3 up_dir, int w, int h, int fov)
 		: scene(scene), location(loc), look_point(look),
-		  up(up_dir), width(w), height (h)
+		  up(up_dir)
 		{
 			look_at(look_point, up);
-			set_image_fov(fov);
-			make_image_buf();
+			set_image_props(w, h, fov);
 		}
 
 	~Camera()
@@ -48,24 +51,30 @@ public:
 
 	Color calc_pix(int x, int y) const;
 	Color *render_image(void);
+	void get_pixel_ray(Ray &r, unsigned x, unsigned y) const;
+
 	bool any_hit(const Ray &r, Hit &h) const;
 	bool nearest_hit(const Ray &r, Hit &h) const;
 
 	Color *get_image_buf(void) const { return image; }
 
-	Color *make_image_buf(void)
+	Color *make_image_buf(void *image_buf)
 	{
 		if (image != nullptr)
 			destroy_image();
 
-		image = new Color[width * height];
+		image = (image_buf != nullptr) ? (Color *)image_buf
+			                           : new Color[width * height];
+		iters = new unsigned[width * height];
 		return image;
 	}
 
 	void destroy_image(void)
 	{
 		delete[] image;
+		delete[] iters;
 		image = nullptr;
+		iters = nullptr;
 	}
 
 	void set_image_bounds(unsigned w, unsigned h)
@@ -73,6 +82,7 @@ public:
 		width = w;
 		height = h;
 		aspect = (float)w/h;
+		pix_size = Vec3(1.0/width, 1.0/height, 0.0);
 	}
 
 	void set_image_fov(int fov)
@@ -84,14 +94,9 @@ public:
 	void set_image_props(unsigned w, unsigned h,
 						 int fov, void *image_buf = nullptr)
 	{
-		width = w;
-		height = h;
-		aspect = (float)w/h;
-
+		set_image_bounds(w, h);
 		set_image_fov(fov);
-
-		if (image_buf != nullptr)
-			image = (Color *)image_buf;
+		make_image_buf(image_buf);
 	}
 
 	void set_pos(const Vec3 &loc)

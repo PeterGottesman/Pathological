@@ -11,7 +11,7 @@ struct Hit {
 	Vec3 pos;
 	Vec3 dir;
 	Vec3 norm;
-	
+
 	const Material *mat;
 };
 
@@ -20,6 +20,10 @@ struct Ray {
 	Vec3 direction;
 	int max_depth;
 	float max_dist;
+
+	Ray(int depth=MAX_DEPTH,
+		float max_dist=MAX_RAY_LENGTH)
+		: max_depth(depth), max_dist(max_dist) {}
 
 	Ray(Vec3 ori, Vec3 dir,
 		int depth=MAX_DEPTH,

@@ -7,21 +7,11 @@
 
 Color Camera::calc_pix(int x, int y) const
 {
-	Vec3 ray_dir;
-	Vec3 ip_coords;
-	Vec3 col;
+	Ray ray;
+	Color col;
 	Hit hit;
 
-	ip_coords = Vec3((float)x/width, (float)y/height, 0);
-	ip_coords += Vec3(-0.5, -0.5, 0);
-
-	// TODO: Mat4, Vec3*Mat4
-	ray_dir = ip_coords.x * x_axis
-		+ ip_coords.y * y_axis
-		+ this->dir * 1;
-
-	ray_dir = Vec3::normalize(ray_dir);
-	Ray ray = Ray(this->location, ray_dir);
+	get_pixel_ray(ray, x, y);
 
 	// TODO: real multisampling
 	const int iters = 30;
@@ -56,6 +46,20 @@ Color *Camera::render_image()
 	}
 	iter++;
 	return image;
+}
+
+void Camera::get_pixel_ray(Ray &r, unsigned x, unsigned y) const
+{
+	Vec3 ip_coords = lower_left + pix_size * Vec3(x, y, 0.0);
+
+	// TODO: Mat4, Vec3*Mat4
+	r.direction = Vec3::normalize(
+		ip_coords.x * x_axis
+		+ ip_coords.y * y_axis
+		+ this->dir * 1);
+
+	r.origin = location;
+	r.max_depth = MAX_DEPTH;
 }
 
 bool Camera::any_hit(const Ray &r, Hit &h) const

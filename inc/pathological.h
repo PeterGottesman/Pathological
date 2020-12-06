@@ -23,14 +23,15 @@ private:
 	std::atomic_bool running;
 
 public:
-	Pathological()
-		: cam(sc), top_rand(RandGen::rand_dev_seeded_generator(seed))
+	Pathological(unsigned w, unsigned h)
+		: cam(sc), tex_width(w), tex_height(h),
+		  top_rand(RandGen::rand_dev_seeded_generator(seed))
 	{
 		std::cout << "Random generator initialized with seed '"
 				  << seed << "'" << std::endl;
 
-		cam.set_image_props(500, 500, 45);
-		tex = cam.make_image_buf();
+		cam.set_image_props(tex_width, tex_height, 45);
+		tex = cam.get_image_buf();
 		load_default_scene(sc, cam);
 	}
 
