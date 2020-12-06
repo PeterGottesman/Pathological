@@ -23,6 +23,9 @@ int main(int argc, char **argv)
 	while (!win.should_quit())
 	{
 		win.display_texture(width, height, (char *)pixels);
+		// Update display at 15 FPS
+		std::this_thread::sleep_for(
+			std::chrono::duration<float, std::ratio<1, 1>>(1.0/15.0));
 	}
 
 	app.stop();
