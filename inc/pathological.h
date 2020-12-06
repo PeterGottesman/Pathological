@@ -1,5 +1,8 @@
 #pragma once
 
+#include <thread>
+#include <atomic>
+
 #include "scene.h"
 #include "camera.h"
 #include "randgen.h"
@@ -16,6 +19,8 @@ private:
 	// Top level random generator, use to create all other generators
 	unsigned seed;
 	RandGen top_rand;
+
+	std::atomic_bool running;
 
 public:
 	Pathological()
@@ -37,6 +42,22 @@ public:
 	void render(void)
 	{
 		cam.render_image();
+	}
+
+	// Main loop for pathtracer execution, to be run in it's own
+	// thread.
+	void run(void)
+	{
+		running = true;
+		while (running)
+		{
+			render();
+		}
+	}
+
+	void stop(void)
+	{
+		running = false;
 	}
 
 	static bool load_default_scene(Scene &sc, Camera &cam);

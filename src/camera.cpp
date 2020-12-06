@@ -29,7 +29,8 @@ Color Camera::calc_pix(int x, int y) const
 	{
 		if (nearest_hit(ray, hit))
 		{
-			col += hit.mat->sample(this->scene, hit.pos, hit.norm, ray.max_depth);
+			col += hit.mat->sample(this->scene, hit.pos,
+								   hit.norm, ray.max_depth);
 		}
 		else
 		{
