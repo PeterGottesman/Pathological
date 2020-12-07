@@ -5,6 +5,19 @@
 #include "ray.h"
 #include "scene.h"
 
+Color Camera::cast_ray(Ray &ray) const
+{
+	Hit hit;
+	if (nearest_hit(ray, hit))
+	{
+		return hit.mat->sample(this->scene, hit.pos,
+							   hit.norm, ray.max_depth);
+	}
+
+	// TODO: Scene-specific background sampling
+	return Color{0.1, 0.3, 0.2};
+}
+
 Color Camera::calc_pix(int x, int y) const
 {
 	Ray ray;
@@ -17,15 +30,7 @@ Color Camera::calc_pix(int x, int y) const
 	const int iters = 30;
 	for (int i = 0; i < iters; ++i)
 	{
-		if (nearest_hit(ray, hit))
-		{
-			col += hit.mat->sample(this->scene, hit.pos,
-								   hit.norm, ray.max_depth);
-		}
-		else
-		{
-			col += Color{0.1, 0.3, 0.2};
-		}
+		col += cast_ray(ray);
 	}
 
 	return col/(float)iters;

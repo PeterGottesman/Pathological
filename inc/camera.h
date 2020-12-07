@@ -50,6 +50,7 @@ public:
 	};
 
 	Color calc_pix(int x, int y) const;
+	Color cast_ray(Ray &ray) const;
 	Color *render_image(void);
 	void get_pixel_ray(Ray &r, unsigned x, unsigned y) const;
 
