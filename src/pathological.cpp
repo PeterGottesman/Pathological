@@ -73,6 +73,7 @@ bool Pathological::load_default_scene(Scene &sc, Camera &cam)
 	Material *redmat = new Lambertian(red, {});
 	Material *whitemat= new Lambertian(white, {});
 	Material *greenmat = new Lambertian(green, {});
+	Material *mirrormat = new Mirror();
 
 	Vec3 l_fru{0.5f, 2.99f, -0.25f};
 	Vec3 l_flu{-0.5f, 2.99f, -0.25f};
@@ -132,18 +133,26 @@ bool Pathological::load_default_scene(Scene &sc, Camera &cam)
 	sc.add_renderable(new Triangle(light2, {0.0}, light));
 
 	sc.add_renderable(new Sphere(
-						  Vec3{1.0f, -2.0f, -1.0f},
+						  Vec3{1.0f, -2.0f, -0.5f},
 						  0.5f,
 						  greenmat
 						  ));
 
-	Vec3 cam_pos(0, 0.0, 7.0);
+	sc.add_renderable(new Sphere(
+						  Vec3{-1.4f, -2.4f, -1.2f},
+						  0.5f,
+						  mirrormat
+						  ));
+
+	Vec3 cam_pos(0, 0.0, 6.0);
 
 	Vec3 look_at(0, 0, 0);
 	Vec3 cam_up = Vec3(0, 1, 0);
 
 	cam.look_at(look_at, cam_up);
 	cam.set_pos(cam_pos);
+
+	sc.set_background({0.0});
 
 	return true;
 }

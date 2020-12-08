@@ -13,14 +13,13 @@ Color Camera::cast_ray(Ray &ray, unsigned iters) const
 		Color col(0.0);
 		for (int i = 0; i < iters; ++i)
 		{
-			col += hit.mat->sample(this->scene, hit.pos,
-								   hit.norm, ray.max_depth);
+			col += hit.mat->sample(this->scene, hit, ray.max_depth);
 		}
 		return col/(float)iters;
 	}
 
 	// TODO: Scene-specific background sampling
-	return Color{0.1, 0.3, 0.2};
+	return scene.get_background(ray.direction);
 }
 
 void Camera::get_pixel_ray(Ray &r, unsigned x, unsigned y) const

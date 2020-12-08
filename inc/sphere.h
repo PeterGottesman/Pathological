@@ -41,8 +41,8 @@ public:
 			float x1 = (-b - dsc_root)/2;
 			h.dist = x0 < x1 ? x0 : x1;
 			h.mat = mat;
-			h.pos = r.origin + r.direction * h.dist;
-			h.norm = Vec3::normalize(h.pos - center);
+			h.hit_pos = r.origin + r.direction * h.dist;
+			h.norm = Vec3::normalize(h.hit_pos - center);
 			return h.dist > 0;
 		}
 

@@ -1,15 +1,17 @@
 #pragma once
 
 #include "vec3.h"
-#include "material.h"
 
 const int MAX_DEPTH = 3;
 const float MAX_RAY_LENGTH = 100.0;
 
+class Material;
+
 struct Hit {
 	float dist;
-	Vec3 pos;
-	Vec3 dir;
+	Vec3 origin;
+	Vec3 hit_pos;
+	Vec3 dir_in;
 	Vec3 norm;
 
 	const Material *mat;

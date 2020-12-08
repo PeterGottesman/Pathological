@@ -43,8 +43,7 @@ static Vec3 sample_hemisphere_uniform(const Vec3 &norm)
 }
 
 Color Lambertian::sample(const Scene &sc,
-						 const Vec3 &pos,
-						 const Vec3& norm,
+						 const Hit &in_hit,
 						 const int depth) const
 {
 	// Sampling the entire hemisphere would be a double integral
@@ -71,18 +70,18 @@ Color Lambertian::sample(const Scene &sc,
 	// brdf is albedo/pi.
 	Color brdf = kd * M_1_PI;
 
-	Vec3 wo = sample_hemisphere_uniform(norm);
-	Ray r(pos, wo, depth-1);
+	Vec3 wo = sample_hemisphere_uniform(in_hit.norm);
+	Ray r(in_hit.hit_pos, wo, depth-1);
 
 	// Reflected light is proportional to cos(theta)
-	float cos_theta = Vec3::dot(norm, r.direction);
+	float cos_theta = Vec3::dot(in_hit.norm, r.direction);
 
 	Hit h;
 	Color diffuse(0.0);
 
 	if (cos_theta > 1e-3 && sc.nearest_hit(r, h))
 	{
-		Color light_in = h.mat->sample(sc, h.pos, h.norm, r.max_depth);
+		Color light_in = h.mat->sample(sc, h, r.max_depth);
 		diffuse = (light_in * brdf * cos_theta)/prob; 
 	}
 

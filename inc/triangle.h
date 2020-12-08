@@ -43,7 +43,7 @@ public:
 
 		h.mat = mat;
 		h.dist = dist;
-		h.pos = r.origin + r.direction * h.dist;
+		h.hit_pos = r.origin + r.direction * h.dist;
 		h.norm = norm;
 		return (dist > 0) & (beta >= 0) & (gamma >= 0) & (beta+gamma<=1);
 	}

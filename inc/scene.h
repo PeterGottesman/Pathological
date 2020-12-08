@@ -17,8 +17,19 @@ private:
 	// TODO: At the moment all non-ambient light is from emissive objects
 	// add explicit lights at a later time
 	// std::vector<std::unique_ptr<Light>> lights;
+	Color bg;
 
 public:
+	Scene() = default;
+	Scene(const Color &background) : bg(background) {}
+
+	Color get_background(const Vec3 &dir) const
+	{
+		// Facing fwd is black, behind is a gradient
+		return bg;
+	}
+	void set_background(const Color &c) { bg = c; }
+
 	bool any_hit(const Ray &r, Hit &h) const;
 	bool nearest_hit(const Ray &r, Hit &h) const;
 
@@ -26,4 +37,5 @@ public:
 	{
 		renderables.push_back(rend);
 	}
+
 };

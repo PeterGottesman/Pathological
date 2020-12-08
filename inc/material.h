@@ -7,19 +7,13 @@ class Scene;
 
 class Material
 {
-private:
-	Color c;
-
 public:
 	Material() {};
-	
 
-	// TODO: Where should I be calling this?
-	// How should I be passing the scene data around?
-	virtual Color sample(const Scene &sc, const Vec3 &pos,
-						 const Vec3& norm, const int depth) const
+	virtual Color sample(const Scene &sc, const Hit &in_hit,
+						 const int depth) const
 	{
-		return norm;
+		return in_hit.norm;
 	}
 };
 
@@ -32,6 +26,15 @@ public:
 	Lambertian(Color kd, Color ke)
 		: kd(kd), ke(ke) {}
 
-	Color sample(const Scene &sc, const Vec3 &pos,
-				 const Vec3& norm, const int depth) const override;
+	Color sample(const Scene &sc, const Hit &in_hit,
+				 const int depth) const override;
+};
+
+class Mirror: public Material
+{
+public:
+	Mirror() {}
+
+	Color sample(const Scene &sc, const Hit &in_hit,
+				 const int depth) const override;
 };
