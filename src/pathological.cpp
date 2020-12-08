@@ -2,6 +2,61 @@
 #include "sphere.h"
 #include "triangle.h"
 
+void Pathological::generate_initial_regions(void)
+{
+	// TODO: divide regions into squares according
+	unsigned reg_height = floor((float)tex_height/nthreads);
+	unsigned reg_start = 0;
+	for (int i = 0; i < nthreads-1; ++i)
+	{
+		regions.push_back(
+			RenderRegion(tex_width, tex_height, // full texture dimensions
+						 tex_width, reg_height, // region dimensions
+						 reg_start, 0)			// region offset (r, c)
+			);
+		reg_start += reg_height;
+	}
+
+	// Last region is larger if need be
+	regions.push_back(
+		RenderRegion(tex_width, tex_height,
+					 tex_width, tex_height-reg_start,
+					 reg_start, 0)
+		);
+}
+
+void Pathological::schedule(void)
+{
+	// TODO: When schedule is called, analysis is done on the threads'
+	// regions and regions are recomputed
+
+	// TODO: Maybe to this on a per-thread basis, where the thread
+	// will call schedule with itself as the argument when some
+	// condition is met, and will be reassigned a new region. Most
+	// likely, this will just be round robin, but eventually this
+	// should be based on some more complex heuristic which (off the
+	// top of my head) should take into account the image's
+	// convergence and the percentage of "interesting" rays (i.e. rays
+	// which collide with an object.
+
+	// TODO: It would be really cool if specific rays can be scheduled
+	// to threads based on some kind of cache-optimization. There has
+	// been some research into this, Daniel Kopta's dissertation seems
+	// to link to good information, look around sect 2.1.4.
+	// https://dkoptacs.github.io/papers/kopta_dissertation.pdf
+}
+
+void Pathological::launch_threads(void)
+{
+	unsigned seed;
+	for (int i = 0; i < nthreads; ++i)
+	{
+		
+		threads.push_back({&cam, regions[i], top_rand.randgen_seeded_generator(seed)});
+		threads.back().launch();
+	}
+}
+
 bool Pathological::load_default_scene(Scene &sc, Camera &cam)
 {
 	// TODO: Make these Color::red, etc

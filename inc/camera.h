@@ -58,6 +58,7 @@ public:
 	bool nearest_hit(const Ray &r, Hit &h) const;
 
 	Color *get_image_buf(void) const { return image; }
+	unsigned *get_iters_buf(void) const { return iters; }
 
 	Color *make_image_buf(void *image_buf)
 	{

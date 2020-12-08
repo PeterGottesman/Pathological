@@ -18,41 +18,6 @@ Color Camera::cast_ray(Ray &ray) const
 	return Color{0.1, 0.3, 0.2};
 }
 
-Color Camera::calc_pix(int x, int y) const
-{
-	Ray ray;
-	Color col;
-	Hit hit;
-
-	get_pixel_ray(ray, x, y);
-
-	// TODO: real multisampling
-	const int iters = 30;
-	for (int i = 0; i < iters; ++i)
-	{
-		col += cast_ray(ray);
-	}
-
-	return col/(float)iters;
-}
-
-Color *Camera::render_image()
-{
-	static int iter = 1;
-    #pragma omp parallel for collapse(2)
-	for (unsigned y = 0; y < height; ++y)
-	{
-		for (unsigned x = 0; x < width; ++x)
-		{
-			int idx = y*width + x;
-			image[idx] = ((iter-1) * image[idx]
-						  + calc_pix(x, y))/(float)iter;
-		}
-	}
-	iter++;
-	return image;
-}
-
 void Camera::get_pixel_ray(Ray &r, unsigned x, unsigned y) const
 {
 	Vec3 ip_coords = lower_left + pix_size * Vec3(x, y, 0.0);
