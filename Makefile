@@ -5,9 +5,9 @@ EXEC=pathological
 LIBS=glfw3 glew 
 
 CXX=clang++
-CFLAGS=-ggdb -O3 $(pkg-config --cflags $(LIBS)) -Wall -fopenmp
-CFLAGS+=-I./inc
-LDFLAGS=`pkg-config --libs $(LIBS)`
+CFLAGS=-ggdb -Ofast $(pkg-config --cflags $(LIBS)) -Wall
+CFLAGS+=-I./inc -march=native
+LDFLAGS=`pkg-config --libs $(LIBS)` -lpthread
 
 default: build/ $(EXEC)
 
