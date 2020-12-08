@@ -32,13 +32,8 @@ void RenderThread::render_region(void)
 
 Color RenderThread::calc_pixel(unsigned x, unsigned y)
 {
-	Color col;
-	const int iters = 30;
-	cam->get_pixel_ray(r, x, y);
-	for (int i = 0; i < iters; ++i)
-	{
-		col += cam->cast_ray(r);
-	}
+	const int iters = 300;
 
-	return col/(float)iters;
+	cam->get_pixel_ray(r, x, y);
+	return cam->cast_ray(r, iters);
 }
