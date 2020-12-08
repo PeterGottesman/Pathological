@@ -69,7 +69,7 @@ public:
 
 	void launch(void)
 	{
-		thread = std::thread(&RenderThread::run, this);
 		running = true;
+		thread = std::thread(&RenderThread::run, this);
 	}
 };
