@@ -8,9 +8,8 @@
 #include "scene.h"
 #include "randgen.h"
 
-unsigned seed;
-RandGen r = RandGen::rand_dev_seeded_generator(seed);
-
+thread_local unsigned seed;
+thread_local RandGen r = RandGen::rand_dev_seeded_generator(seed);
 static Vec3 sample_hemisphere_uniform(const Vec3 &norm)
 {
 	// Unit vector that isn't collinear with norm, use to create basis
