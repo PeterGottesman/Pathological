@@ -1,9 +1,14 @@
 #include "material.h"
 #include "scene.h"
 
+Vec3 reflect(const Vec3 &norm, const Vec3 &wi)
+{
+	return wi - 2.0 * norm * Vec3::dot(norm, wi);
+}
+
 Color Mirror::sample(const Scene &sc, const Hit &in_hit, const int depth) const
 {
-	Vec3 wo = in_hit.dir_in + 2*in_hit.norm;
+	Vec3 wo = reflect(in_hit.norm, in_hit.dir_in);
 	if (depth == 0)
 		return sc.get_background(wo);
 

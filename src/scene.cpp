@@ -16,6 +16,8 @@ bool Scene::any_hit(const Ray &r, Hit &h) const
 bool Scene::nearest_hit(const Ray &r, Hit &h) const
 {
 	Hit tmp_hit;
+	tmp_hit.dir_in = r.direction;
+
 	float min_d = r.max_dist;
 	bool didhit = false;
 	for (auto &rend : renderables)
