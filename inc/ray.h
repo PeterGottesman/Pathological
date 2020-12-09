@@ -2,7 +2,7 @@
 
 #include "vec3.h"
 
-const int MAX_DEPTH = 3;
+const int MAX_DEPTH = 5;
 const float MAX_RAY_LENGTH = 100.0;
 
 class Material;

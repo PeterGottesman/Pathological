@@ -52,7 +52,7 @@ void Pathological::launch_threads(void)
 	for (int i = 0; i < nthreads; ++i)
 	{
 		
-		threads.push_back({&cam, regions[i], top_rand.randgen_seeded_generator(seed)});
+		threads.push_back({&cam, regions[i], rand.randgen_seeded_generator(seed)});
 		threads.back().launch();
 	}
 }
@@ -121,8 +121,8 @@ bool Pathological::load_default_scene(Scene &sc, Camera &cam)
 	sc.add_renderable(new Triangle(left2, {0.0}, redmat));
 
 	// Right wall
-	sc.add_renderable(new Triangle(right1, {0.0}, greenmat));
-	sc.add_renderable(new Triangle(right2, {0.0}, greenmat));
+	sc.add_renderable(new Triangle(right1, {0.0}, mirrormat));
+	sc.add_renderable(new Triangle(right2, {0.0}, mirrormat));
 
 	// Back wall
 	sc.add_renderable(new Triangle(back1, {0.0}, whitemat));
@@ -133,7 +133,7 @@ bool Pathological::load_default_scene(Scene &sc, Camera &cam)
 	sc.add_renderable(new Triangle(light2, {0.0}, light));
 
 	sc.add_renderable(new Sphere(
-						  Vec3{1.0f, -2.0f, -0.5f},
+						  Vec3{1.3f, -2.0f, -1.4f},
 						  0.5f,
 						  greenmat
 						  ));
@@ -141,6 +141,12 @@ bool Pathological::load_default_scene(Scene &sc, Camera &cam)
 	sc.add_renderable(new Sphere(
 						  Vec3{-1.4f, -2.4f, -1.2f},
 						  0.5f,
+						  mirrormat
+						  ));
+
+	sc.add_renderable(new Sphere(
+						  Vec3{-0.8f, -2.7f, -1.7f},
+						  0.25f,
 						  mirrormat
 						  ));
 

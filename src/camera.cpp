@@ -5,7 +5,7 @@
 #include "ray.h"
 #include "scene.h"
 
-Color Camera::cast_ray(Ray &ray, unsigned iters) const
+Color Camera::cast_ray(Ray &ray, unsigned iters)
 {
 	Hit hit;
 	if (nearest_hit(ray, hit))
@@ -13,7 +13,7 @@ Color Camera::cast_ray(Ray &ray, unsigned iters) const
 		Color col(0.0);
 		for (int i = 0; i < iters; ++i)
 		{
-			col += hit.mat->sample(this->scene, hit, ray.max_depth);
+			col += hit.mat->sample(this->scene, hit, ray.max_depth, rand);
 		}
 		return col/(float)iters;
 	}

@@ -1,6 +1,8 @@
 #pragma once
 
+#include <iostream>
 #include <random>
+#include "vec3.h"
 
 class RandGen
 {
@@ -10,9 +12,13 @@ private:
 	std::uniform_real_distribution<float> zero_one;
 
 public:
-	RandGen(unsigned seed) : seed(seed), engine(seed), zero_one(0.0, 1.0) {}
+	RandGen(unsigned seed)
+		: seed(seed), engine(seed), zero_one(0.0, 1.0) {}
 
-	unsigned get_seed(void) { return seed; }
+	unsigned get_seed(void)
+	{
+		return seed;
+	}
 
 	float uniform()
 	{
@@ -36,6 +42,10 @@ public:
 		std::random_device dev;
 		std::uniform_int_distribution<unsigned> dist;
 		seed = dist(dev);
+
+		std::cout << "Random generator initialized with seed '"
+		          << seed << "' from random_device" << std::endl;
+
 		return {seed};
 	}
 
@@ -45,4 +55,6 @@ public:
 		seed = dist(engine);
 		return {seed};
 	}
+
+	static Vec3 sample_hemisphere_uniform(const Vec3 &norm, RandGen &rg);
 };

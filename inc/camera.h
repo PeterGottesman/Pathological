@@ -6,10 +6,11 @@
 
 #include "ray.h"
 #include "vec3.h"
+#include "pathologicalobj.h"
 
 class Scene;
 
-class Camera
+class Camera : public PathologicalObject
 {
 	const Vec3 lower_left = {-0.5, -0.5, 0};
 	Vec3 pix_size;
@@ -34,11 +35,13 @@ class Camera
 	float hfov, vfov; 			   // Vert && Horiz field of view
 
 public:
-	Camera(Scene &scene) : scene(scene) {}
+	Camera(Scene &scene, RandGen &rng)
+		: PathologicalObject(rng), scene(scene) {}
+
 	Camera(Scene &scene, Vec3 loc, Vec3 look,
-		   Vec3 up_dir, int w, int h, int fov)
-		: scene(scene), location(loc), look_point(look),
-		  up(up_dir)
+		   Vec3 up_dir, int w, int h, int fov, RandGen &rng)
+		: PathologicalObject(rng), scene(scene),
+		  location(loc), look_point(look), up(up_dir)
 		{
 			look_at(look_point, up);
 			set_image_props(w, h, fov);
@@ -50,7 +53,7 @@ public:
 	};
 
 	Color calc_pix(int x, int y) const;
-	Color cast_ray(Ray &ray, unsigned iters) const;
+	Color cast_ray(Ray &ray, unsigned iters);
 	Color *render_image(void);
 	void get_pixel_ray(Ray &r, unsigned x, unsigned y) const;
 
