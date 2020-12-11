@@ -11,7 +11,7 @@ const int HEIGHT = 400;
 
 int main(int argc, char **argv)
 {
-	Window win(WIDTH, HEIGHT, "Nifty stuff");
+	Window win(WIDTH, HEIGHT, "Pathological path tracer");
 	int width = win.get_width();
 	int height = win.get_height();
 
