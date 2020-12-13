@@ -7,13 +7,15 @@
 #include "scene.h"
 #include "camera.h"
 #include "renderthread.h"
-#include "pathologicalobj.h"
+#include "randgen.h"
 
 #include "timer.h"
 
-class Pathological : public PathologicalObject
+class Pathological
 {
 private:
+	unsigned seed;
+	RandGen rand;
 
 	// NOTE: Multiple scenes? Multiple cameras in a scene?
 	Scene sc;
@@ -30,7 +32,8 @@ private:
 public:
 	Pathological(unsigned w, unsigned h,
 				 unsigned numthreads = std::thread::hardware_concurrency())
-		: PathologicalObject(), sc(rand), cam(sc, rand), tex_width(w),
+		: rand(RandGen::rand_dev_seeded_generator(seed)),
+		  sc(), cam(sc, rand), tex_width(w),
 		  tex_height(h), nthreads(numthreads)
 	{
 		cam.set_image_props(tex_width, tex_height, 45);

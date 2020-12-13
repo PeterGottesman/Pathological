@@ -34,5 +34,5 @@ void RenderThread::render_region(void)
 Color RenderThread::calc_pixel(unsigned x, unsigned y)
 {
 	cam->get_pixel_ray(r, x, y);
-	return cam->cast_ray(r);
+	return cam->cast_ray(r, rand);
 }

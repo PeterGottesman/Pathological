@@ -5,7 +5,7 @@
 #include "ray.h"
 #include "scene.h"
 
-Color Camera::cast_ray(Ray &ray)
+Color Camera::cast_ray(Ray &ray, RandGen &rand)
 {
 	Hit hit;
 	if (nearest_hit(ray, hit))

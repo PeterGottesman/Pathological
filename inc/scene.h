@@ -7,9 +7,8 @@
 #include "ray.h"
 #include "renderable.h"
 #include "light.h"
-#include "pathologicalobj.h"
 
-class Scene : public PathologicalObject
+class Scene
 {
 private:
 	// TODO: Is this a proper use of unique_ptr?
@@ -21,11 +20,8 @@ private:
 	Color bg;
 
 public:
-	Scene(RandGen &rng)
-		: PathologicalObject(rng) {}
-
-	Scene(const Color &background, RandGen &rng)
-		: PathologicalObject(rng), bg(background) {}
+	Scene() {}
+	Scene(const Color &background) :  bg(background) {}
 
 	Color get_background(const Vec3 &dir) const
 	{

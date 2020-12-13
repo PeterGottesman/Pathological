@@ -34,7 +34,7 @@ private:
 	unsigned *iters;
 
 	RenderRegion region;
-	RandGen randgen;
+	RandGen rand;
 
 	std::thread thread;
 	std::atomic<bool> running;
@@ -45,14 +45,14 @@ private:
 
 public:
 	RenderThread(const RenderThread &rt)
-		: cam(rt.cam), region(rt.region), randgen(rt.randgen)
+		: cam(rt.cam), region(rt.region), rand(rt.rand)
 		{
 			image = cam->get_image_buf();
 			iters = cam->get_iters_buf();
 		}
 
 	RenderThread(Camera *cam, RenderRegion region, RandGen rng)
-		: cam(cam), region(region), randgen(rng)
+		: cam(cam), region(region), rand(rng)
 		{
 			image = cam->get_image_buf();
 			iters = cam->get_iters_buf();

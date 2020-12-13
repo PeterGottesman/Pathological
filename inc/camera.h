@@ -6,12 +6,16 @@
 
 #include "ray.h"
 #include "vec3.h"
-#include "pathologicalobj.h"
+#include "randgen.h"
 
 class Scene;
 
-class Camera : public PathologicalObject
+class Camera
 {
+	// TODO: randomized multisampling
+	unsigned seed;
+	RandGen rand;
+
 	const Vec3 lower_left = {-0.5, -0.5, 0};
 	Vec3 pix_size;
 
@@ -36,11 +40,11 @@ class Camera : public PathologicalObject
 
 public:
 	Camera(Scene &scene, RandGen &rng)
-		: PathologicalObject(rng), scene(scene) {}
+		:  rand(rng), scene(scene) {}
 
 	Camera(Scene &scene, Vec3 loc, Vec3 look,
 		   Vec3 up_dir, int w, int h, int fov, RandGen &rng)
-		: PathologicalObject(rng), scene(scene),
+		: rand(rng), scene(scene),
 		  location(loc), look_point(look), up(up_dir)
 		{
 			look_at(look_point, up);
@@ -53,7 +57,7 @@ public:
 	};
 
 	Color calc_pix(int x, int y) const;
-	Color cast_ray(Ray &ray);
+	Color cast_ray(Ray &ray, RandGen &rand);
 	Color *render_image(void);
 	void get_pixel_ray(Ray &r, unsigned x, unsigned y) const;
 
