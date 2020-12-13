@@ -15,7 +15,6 @@ Color Camera::cast_ray(Ray &ray)
 		return col;
 	}
 
-	// TODO: Scene-specific background sampling
 	return scene.get_background(ray.direction);
 }
 
