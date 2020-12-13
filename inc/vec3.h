@@ -114,8 +114,8 @@ struct Vec3
 	static Vec3 sp2cart(float rad, float theta, float phi)
 	{
 		return rad * Vec3(
-			sin(theta) * cos(phi),
-			sin(theta) * sin(phi),
+			sin(phi) * cos(theta),
+			sin(phi) * sin(theta),
 			cos(phi)
 			);
 	}
