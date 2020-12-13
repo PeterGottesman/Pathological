@@ -2,11 +2,14 @@
 
 #include <thread>
 #include <atomic>
+#include <cstdio>
 
 #include "scene.h"
 #include "camera.h"
 #include "renderthread.h"
 #include "pathologicalobj.h"
+
+#include "timer.h"
 
 class Pathological : public PathologicalObject
 {
@@ -17,6 +20,7 @@ private:
 	Camera cam;
 	unsigned tex_width, tex_height;
 	void *tex;
+	Timer timer;
 
 	std::atomic_bool running;
 	unsigned nthreads;
@@ -52,6 +56,7 @@ public:
 	// thread.
 	void run(void)
 	{
+		timer.start();
 		launch_threads();
 		running = true;
 	}
@@ -65,6 +70,16 @@ public:
 		// for the first pass and it mirrors the thread creation in
 		// run()
 		threads.clear();
+		timer.stop();
+
+		long unsigned num_iters = 0;
+		for (int i = 0; i < tex_width*tex_height; ++i)
+			num_iters += cam.get_iters_buf()[i];
+
+		printf("Ran for %f ms\n", timer.get_ms());
+		printf("Cast %f rays per ms (%f million per sec)\n", timer.get_cnt_per_ms(num_iters),
+			   timer.get_cnt_per_ms(num_iters)/1000);
+
 	}
 
 	// TODO: Scene, obj, etc loaders

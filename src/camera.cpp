@@ -5,17 +5,14 @@
 #include "ray.h"
 #include "scene.h"
 
-Color Camera::cast_ray(Ray &ray, unsigned iters)
+Color Camera::cast_ray(Ray &ray)
 {
 	Hit hit;
 	if (nearest_hit(ray, hit))
 	{
 		Color col(0.0);
-		for (int i = 0; i < iters; ++i)
-		{
-			col += hit.mat->sample(this->scene, hit, ray.max_depth, rand);
-		}
-		return col/(float)iters;
+		col += hit.mat->sample(this->scene, hit, ray.max_depth, rand);
+		return col;
 	}
 
 	// TODO: Scene-specific background sampling
