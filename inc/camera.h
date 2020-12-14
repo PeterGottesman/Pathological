@@ -59,7 +59,7 @@ public:
 	Color calc_pix(int x, int y) const;
 	Color cast_ray(Ray &ray, RandGen &rand);
 	Color *render_image(void);
-	void get_pixel_ray(Ray &r, unsigned x, unsigned y) const;
+	void get_pixel_ray(Ray &r, unsigned x, unsigned y, const Vec3 &offset) const;
 
 	bool any_hit(const Ray &r, Hit &h) const;
 	bool nearest_hit(const Ray &r, Hit &h) const;

@@ -39,7 +39,7 @@ private:
 	std::thread thread;
 	std::atomic<bool> running;
 
-	Color calc_pixel(unsigned x, unsigned y);
+	Color calc_pixel(unsigned x, unsigned y, const Vec3 &offset);
 	void render_region(void);
 	void run(void);
 

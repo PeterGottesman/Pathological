@@ -16,9 +16,9 @@ Color Camera::cast_ray(Ray &ray, RandGen &rand)
 	return scene.get_background(ray.direction);
 }
 
-void Camera::get_pixel_ray(Ray &r, unsigned x, unsigned y) const
+void Camera::get_pixel_ray(Ray &r, unsigned x, unsigned y, const Vec3 &offset) const
 {
-	Vec3 ip_coords = lower_left + pix_size * Vec3(x, y, 0.0);
+	Vec3 ip_coords = lower_left + pix_size * (Vec3(x, y, 0.0) + offset);
 
 	// TODO: Mat4, Vec3*Mat4
 	r.direction = Vec3::normalize(
