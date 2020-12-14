@@ -10,9 +10,7 @@ Color Camera::cast_ray(Ray &ray, RandGen &rand)
 	Hit hit;
 	if (nearest_hit(ray, hit))
 	{
-		Color col(0.0);
-		col += hit.mat->sample(this->scene, hit, ray.max_depth, rand);
-		return col;
+		return hit.mat->sample(this->scene, hit, ray.max_depth, rand);
 	}
 
 	return scene.get_background(ray.direction);
