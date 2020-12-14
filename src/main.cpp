@@ -4,14 +4,14 @@
 #include "pathological.h"
 #include "exporter.h"
 
-const int WIDTH = 400;
-const int HEIGHT = 400;
+const int WIDTH = 1280;
+const int HEIGHT = 720;
 
 int main(int argc, char **argv)
 {
 	Window win(WIDTH, HEIGHT, "Pathological path tracer");
-	int width = win.get_width();
-	int height = win.get_height();
+	int width = WIDTH;
+	int height = HEIGHT;
 
 	Pathological app(width, height);
 	void *pixels = app.get_texture();
