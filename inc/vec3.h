@@ -100,9 +100,14 @@ struct Vec3
 			);
 	}
 
+	static float squared_magnitude(const Vec3 &a)
+	{
+		return a.x*a.x + a.y*a.y + a.z*a.z;
+	}
+
 	static float magnitude(const Vec3 &a)
 	{
-		return sqrt(a.x*a.x + a.y*a.y + a.z*a.z);
+		return sqrt(squared_magnitude(a));
 	}
 
 	static Vec3 normalize(const Vec3 &a)
