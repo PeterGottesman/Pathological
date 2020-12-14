@@ -17,7 +17,7 @@ public:
 	Sphere(const Vec3 &center, const float &rad, const Material *mat)
 		: Renderable(mat), center(center), radius(rad) {}
 
-	bool intersect(const Ray &r, Hit &h)
+	bool intersect(const Ray &r, Hit &h) override
 	{
 		// Line from origin to center of sphere
 		Vec3 ln = r.origin - center;
@@ -37,15 +37,23 @@ public:
 		if (dsc >= 0)
 		{
 			float dsc_root = sqrt(dsc);
-			float x0 = (-b + dsc_root)/2;
-			float x1 = (-b - dsc_root)/2;
-			h.dist = x0 < x1 ? x0 : x1;
+			float x0 = -b + dsc_root;
+			float x1 = -b - dsc_root;
+			h.dist = (x0 < x1 ? x0 : x1)/2;
 			h.mat = mat;
-			h.hit_pos = r.origin + r.direction * h.dist;
-			h.norm = Vec3::normalize(h.hit_pos - center);
 			return h.dist > 0;
 		}
 
 		return false;
+	}
+
+	Vec3 get_normal(const Vec3 &pt) override
+	{
+			return (pt - center)/radius;
+	}
+
+	void get_normal(const Vec3 &pt, Vec3 &norm) override
+	{
+			norm = (pt - center)/radius;
 	}
 };

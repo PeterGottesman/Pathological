@@ -43,8 +43,16 @@ public:
 
 		h.mat = mat;
 		h.dist = dist;
-		h.hit_pos = r.origin + r.direction * h.dist;
-		h.norm = norm;
 		return (dist > 0) & (beta >= 0) & (gamma >= 0) & (beta+gamma<=1);
+	}
+
+	Vec3 get_normal(const Vec3 &pt) override
+	{
+		return norm;
+	}
+
+	void get_normal(const Vec3 &pt, Vec3 &norm) override
+	{
+		norm = this->norm;
 	}
 };
