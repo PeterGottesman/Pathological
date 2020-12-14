@@ -8,6 +8,7 @@
 #include "camera.h"
 #include "renderthread.h"
 #include "randgen.h"
+#include "exporter.h"
 
 #include "timer.h"
 
@@ -28,6 +29,8 @@ private:
 	unsigned nthreads;
 	std::vector<RenderThread> threads;
 	std::vector<RenderRegion> regions;
+	Exporter *exporter;
+
 
 public:
 	Pathological(unsigned w, unsigned h,
@@ -49,6 +52,7 @@ public:
 	void generate_initial_regions(void);
 	void schedule(void);
 	void launch_threads(void);
+	void add_exporter(Exporter *exp);
 
 	void *get_texture(void) const
 	{
@@ -82,6 +86,8 @@ public:
 		printf("Ran for %f ms\n", timer.get_ms());
 		printf("Cast %f rays per ms (%f million per sec)\n", timer.get_cnt_per_ms(num_iters),
 			   timer.get_cnt_per_ms(num_iters)/1000);
+
+		exporter->export_image();
 
 	}
 

@@ -57,6 +57,11 @@ void Pathological::launch_threads(void)
 	}
 }
 
+void Pathological::add_exporter(Exporter *exp)
+{
+	exporter = exp;
+}
+
 bool Pathological::load_default_scene(Scene &sc, Camera &cam)
 {
 	// TODO: Make these Color::red, etc

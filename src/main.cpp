@@ -1,10 +1,8 @@
 // Includes gl - do this first
 #include "window.h"
-
 #include <thread>
-#include <GLFW/glfw3.h>
-
 #include "pathological.h"
+#include "exporter.h"
 
 const int WIDTH = 400;
 const int HEIGHT = 400;
@@ -17,6 +15,9 @@ int main(int argc, char **argv)
 
 	Pathological app(width, height);
 	void *pixels = app.get_texture();
+	NetPBM exp("traced.ppm", width, height, (Color *)pixels);
+
+	app.add_exporter(&exp);
 	std::thread app_thread(&Pathological::run, &app);
 
 	while (!win.should_quit())
