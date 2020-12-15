@@ -80,7 +80,7 @@ public:
 		timer.stop();
 
 		long long unsigned num_iters = 0;
-		for (int i = 0; i < tex_width*tex_height; ++i)
+		for (unsigned i = 0; i < tex_width*tex_height; ++i)
 			num_iters += cam.get_iters_buf()[i];
 
 		printf("Ran for %.4f ms\n", timer.get_ms());

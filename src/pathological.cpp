@@ -7,7 +7,7 @@ void Pathological::generate_initial_regions(void)
 	// TODO: divide regions into squares according
 	unsigned reg_height = floor((float)tex_height/nthreads);
 	unsigned reg_start = 0;
-	for (int i = 0; i < nthreads-1; ++i)
+	for (unsigned i = 0; i < nthreads-1; ++i)
 	{
 		regions.push_back(
 			RenderRegion(tex_width, tex_height, // full texture dimensions
@@ -49,7 +49,7 @@ void Pathological::schedule(void)
 void Pathological::launch_threads(void)
 {
 	unsigned seed;
-	for (int i = 0; i < nthreads; ++i)
+	for (unsigned i = 0; i < nthreads; ++i)
 	{
 		
 		threads.push_back({&cam, regions[i], rand.randgen_seeded_generator(seed)});

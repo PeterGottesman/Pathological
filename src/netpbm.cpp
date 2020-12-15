@@ -9,10 +9,10 @@ bool NetPBM::export_image(void) const
 	file << "P3 " << width << " " << height << " " << range << "\n";
 
 	int i;
-	for (int r = 0; r < height; r++)
+	for (unsigned r = 0; r < height; r++)
 	{
 		i = (height-r-1) * width;
-		for (int c = 0; c < width; ++c)
+		for (unsigned c = 0; c < width; ++c)
 		{
 			unsigned r, g, b;
 			r = (unsigned)(image[i].r * (range+1));
