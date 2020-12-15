@@ -1,14 +1,25 @@
 // Includes gl - do this first
 #include "window.h"
 #include <thread>
+#include <cstring>
+
 #include "pathological.h"
 #include "exporter.h"
+#include "benchmark.h"
 
 const int WIDTH = 1280;
 const int HEIGHT = 720;
 
 int main(int argc, char **argv)
 {
+	if (argc > 1 && strncmp(argv[1], "bench", 6) == 0)
+	{
+		printf("Running single threaded tests\n");
+		Benchmark::bench_spheres();
+		Benchmark::bench_tris();
+		return 0;
+	}
+
 	Window win(WIDTH, HEIGHT, "Pathological path tracer");
 	int width = WIDTH;
 	int height = HEIGHT;

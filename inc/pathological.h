@@ -84,7 +84,7 @@ public:
 			num_iters += cam.get_iters_buf()[i];
 
 		printf("Ran for %f ms\n", timer.get_ms());
-		printf("Cast %f rays per ms (%f million per sec)\n", timer.get_cnt_per_ms(num_iters),
+		printf("Computed %f million paths per second\n",
 			   timer.get_cnt_per_ms(num_iters)/1000);
 
 		exporter->export_image();
