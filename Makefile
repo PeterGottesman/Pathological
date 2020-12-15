@@ -4,7 +4,7 @@ EXEC=pathological
 
 LIBS=glfw3 glew 
 
-CXX=clang++
+CXX=g++
 CFLAGS=-ggdb -Ofast $(pkg-config --cflags $(LIBS)) -Wall
 CFLAGS+=-I./inc -march=native
 LDFLAGS=`pkg-config --libs $(LIBS)` -lpthread
