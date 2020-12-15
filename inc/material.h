@@ -11,10 +11,10 @@ class Material
 public:
 	Material() {};
 
-	virtual Color sample(const Scene &sc, const Hit &in_hit,
+	virtual Color sample(const Scene &sc, Hit &hit,
 						 const int depth, RandGen &rng) const
 	{
-		return in_hit.norm;
+		return hit.norm;
 	}
 };
 
@@ -27,7 +27,7 @@ public:
 	Lambertian(Color kd, Color ke)
 		: kd(kd), ke(ke) {}
 
-	Color sample(const Scene &sc, const Hit &in_hit,
+	Color sample(const Scene &sc, Hit &hit,
 				 const int depth, RandGen &rng) const override;
 };
 
@@ -36,6 +36,6 @@ class Mirror: public Material
 public:
 	Mirror() {}
 
-	Color sample(const Scene &sc, const Hit &in_hit,
+	Color sample(const Scene &sc, Hit &hit,
 				 const int depth, RandGen &rng) const override;
 };

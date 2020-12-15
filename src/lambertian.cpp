@@ -9,7 +9,7 @@
 #include "randgen.h"
 
 Color Lambertian::sample(const Scene &sc,
-						 const Hit &in_hit,
+						 Hit &hit,
 						 const int depth,
 						 RandGen &rng) const
 {
@@ -37,19 +37,20 @@ Color Lambertian::sample(const Scene &sc,
 	// brdf is albedo/pi.
 	Color brdf = kd * M_1_PI;
 
-	Vec3 wo = RandGen::sample_hemisphere_uniform(in_hit.norm, rng);
-	Ray r(in_hit.hit_pos, wo, depth-1);
+	Vec3 wo = RandGen::sample_hemisphere_uniform(hit.norm, rng);
+	Ray r(hit.hit_pos, wo, depth-1);
 
 	// Reflected light is proportional to cos(theta)
-	float cos_theta = Vec3::dot(in_hit.norm, r.direction);
+	float cos_theta = Vec3::dot(hit.norm, r.direction);
 
-	Hit h;
 	Color diffuse(0.0);
 
-	if (cos_theta > 1e-3 && sc.nearest_hit(r, h))
+	if (cos_theta > 1e-3 && sc.nearest_hit(r, hit))
 	{
-		Color light_in = h.mat->sample(sc, h, r.max_depth, rng);
-		diffuse = (light_in * brdf * cos_theta)/prob; 
+		Color light_in = hit.mat->sample(sc, hit, r.max_depth, rng);
+		Color atten = cos_theta * brdf/prob;
+		diffuse = light_in * atten;
+
 	}
 
 	// return r.direction;
