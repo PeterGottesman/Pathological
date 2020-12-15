@@ -3,9 +3,6 @@
 #include "triangle.h"
 #include "sphere.h"
 
-// TODO: Remove
-#include <chrono>
-
 bool Scene::any_hit(const Ray &r, Hit &h) const
 {
 	for (auto &rend : renderables)

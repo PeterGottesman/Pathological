@@ -79,12 +79,12 @@ public:
 		threads.clear();
 		timer.stop();
 
-		long unsigned num_iters = 0;
+		long long unsigned num_iters = 0;
 		for (int i = 0; i < tex_width*tex_height; ++i)
 			num_iters += cam.get_iters_buf()[i];
 
-		printf("Ran for %f ms\n", timer.get_ms());
-		printf("Computed %f million paths per second\n",
+		printf("Ran for %.4f ms\n", timer.get_ms());
+		printf("Computed %.4f million paths per second\n",
 			   timer.get_cnt_per_ms(num_iters)/1000);
 
 		exporter->export_image();
