@@ -33,9 +33,15 @@ Color Lambertian::sample(const Scene &sc,
 	if (depth == 0) return ke;
 	float prob = M_1_PI/2;
 
- 	// I do not fully understand the derivation for this, but the
-	// brdf is albedo/pi.
-	Color brdf = kd * M_1_PI;
+	// This comes from integrating (brdf*kd*cos_theta*light_in) over
+	// the unit hemisphere. To properly conserve energy, this integral
+	// should evaluate to at most the incoming light - a surface can
+	// only scatter as much light as it receives. This will evaluate
+	// to (pi*brdf*kd*li) <= li, as the brdf is a constant. Given kd
+	// has no element greater than 1, this results in brdf=1/PI. Great
+	// explanation here:
+	// http://www.rorydriscoll.com/2009/01/25/energy-conservation-in-games/
+	Color brdf = M_1_PI;
 
 	Vec3 wo = RandGen::sample_hemisphere_uniform(hit.norm, rng);
 	Ray r(hit.hit_pos, wo, depth-1);
@@ -48,7 +54,7 @@ Color Lambertian::sample(const Scene &sc,
 	if (cos_theta > 1e-3 && sc.nearest_hit(r, hit))
 	{
 		Color light_in = hit.mat->sample(sc, hit, r.max_depth, rng);
-		Color atten = cos_theta * brdf/prob;
+		Color atten = kd * cos_theta * brdf/prob;
 		diffuse = light_in * atten;
 
 	}
