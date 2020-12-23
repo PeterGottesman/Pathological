@@ -10,7 +10,7 @@
 
 Color Lambertian::sample(const Scene &sc,
 						 Hit &hit,
-						 const int depth,
+						 const Ray &r,
 						 RandGen &rng) const
 {
 	// Sampling the entire hemisphere would be a double integral
@@ -30,7 +30,7 @@ Color Lambertian::sample(const Scene &sc,
 	// hemisphere is sin(theta)/2pi. The sin(theta) in the
 	// numerator cancels with the sin(theta) in the integral
 	// above.
-	if (depth == 0) return ke;
+	if (r.depth == r.max_depth) return ke;
 	float prob = M_1_PI/2;
 
 	// This comes from integrating (brdf*kd*cos_theta*light_in) over
@@ -44,16 +44,16 @@ Color Lambertian::sample(const Scene &sc,
 	Color brdf = M_1_PI;
 
 	Vec3 wo = RandGen::sample_hemisphere_uniform(hit.norm, rng);
-	Ray r(hit.hit_pos, wo, depth-1);
+	Ray ro(hit.hit_pos, wo, r.depth+1);
 
 	// Reflected light is proportional to cos(theta)
-	float cos_theta = Vec3::dot(hit.norm, r.direction);
+	float cos_theta = Vec3::dot(hit.norm, ro.direction);
 
 	Color diffuse(0.0);
 
-	if (cos_theta > 1e-3 && sc.nearest_hit(r, hit))
+	if (cos_theta > 1e-3 && sc.nearest_hit(ro, hit))
 	{
-		Color light_in = hit.mat->sample(sc, hit, r.max_depth, rng);
+		Color light_in = hit.mat->sample(sc, hit, ro, rng);
 		Color atten = kd * cos_theta * brdf/prob;
 		diffuse = light_in * atten;
 

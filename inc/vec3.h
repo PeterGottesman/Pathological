@@ -124,6 +124,12 @@ struct Vec3
 			cos(phi)
 			);
 	}
+
+	static Vec3 reflect(const Vec3 &norm, const Vec3 &wi)
+	{
+		return wi - 2.0 * norm * Vec3::dot(norm, wi);
+	}
+
 };
 
 using Color = Vec3;

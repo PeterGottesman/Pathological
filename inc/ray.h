@@ -20,16 +20,22 @@ struct Hit {
 struct Ray {
 	Vec3 origin;
 	Vec3 direction;
-	int max_depth;
+	int depth, max_depth;
 	float max_dist;
+	float ior;
 
-	Ray(int depth=MAX_DEPTH,
-		float max_dist=MAX_RAY_LENGTH)
-		: max_depth(depth), max_dist(max_dist) {}
+
+	Ray(int max_depth=MAX_DEPTH,
+		float max_dist=MAX_RAY_LENGTH,
+		float ior = 1.0f)
+		: max_depth(max_depth), max_dist(max_dist), ior(ior) {}
 
 	Ray(Vec3 ori, Vec3 dir,
-		int depth=MAX_DEPTH,
+		int depth=0,
+		float ior = 1.0f,
+		int max_depth=MAX_DEPTH,
 		float max_dist=MAX_RAY_LENGTH)
-		: origin(ori), direction(dir), max_depth(depth),
-		  max_dist(max_dist) {}
+		: origin(ori), direction(dir),
+		  depth(depth), max_depth(max_depth),
+		  max_dist(max_dist), ior(ior) {}
 };
