@@ -40,4 +40,13 @@ public:
 				 const Ray &r, RandGen &rng) const override;
 };
 
+class Dielectric: public Material
+{
+private:
+	float ior;
+public:
+	Dielectric(float ior) : ior(ior) {}
+
+	Color sample(const Scene &sc, Hit &hit,
+				 const Ray &r, RandGen &rng) const override;
 };

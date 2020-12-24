@@ -79,6 +79,7 @@ bool Pathological::load_default_scene(Scene &sc, Camera &cam)
 	Material *whitemat= new Lambertian(white, {});
 	Material *greenmat = new Lambertian(green, {});
 	Material *mirrormat = new Mirror();
+    Material *glassmat = new Dielectric(1.5);
 
 	Vec3 l_fru{0.5f, 2.99f, -0.25f};
 	Vec3 l_flu{-0.5f, 2.99f, -0.25f};
@@ -126,8 +127,8 @@ bool Pathological::load_default_scene(Scene &sc, Camera &cam)
 	sc.add_renderable(new Triangle(left2, {0.0}, redmat));
 
 	// Right wall
-	sc.add_renderable(new Triangle(right1, {0.0}, mirrormat));
-	sc.add_renderable(new Triangle(right2, {0.0}, mirrormat));
+	sc.add_renderable(new Triangle(right1, {0.0}, greenmat));
+	sc.add_renderable(new Triangle(right2, {0.0}, greenmat));
 
 	// Back wall
 	sc.add_renderable(new Triangle(back1, {0.0}, whitemat));
@@ -138,10 +139,16 @@ bool Pathological::load_default_scene(Scene &sc, Camera &cam)
 	sc.add_renderable(new Triangle(light2, {0.0}, light));
 
 	sc.add_renderable(new Sphere(
-						  Vec3{1.3f, -2.0f, -1.4f},
+						  Vec3{1.3f, -2.2f, -0.5f},
 						  0.5f,
-						  greenmat
+						  glassmat
 						  ));
+
+	// sc.add_renderable(new Sphere(
+	// 					  Vec3{1.3f, -2.0f, -1.4f},
+	// 					  0.5f,
+	// 					  greenmat
+	// 					  ));
 
 	sc.add_renderable(new Sphere(
 						  Vec3{-1.4f, -2.4f, -1.2f},
@@ -149,13 +156,13 @@ bool Pathological::load_default_scene(Scene &sc, Camera &cam)
 						  mirrormat
 						  ));
 
-	sc.add_renderable(new Sphere(
-						  Vec3{-0.8f, -2.7f, -1.7f},
-						  0.25f,
-						  mirrormat
-						  ));
+	// sc.add_renderable(new Sphere(
+	// 					  Vec3{-0.8f, -2.7f, -1.7f},
+	// 					  0.25f,
+	// 					  mirrormat
+	// 					  ));
 
-	Vec3 cam_pos(0, 0.0, 6.0);
+	Vec3 cam_pos(0, 2.0, 6.0);
 
 	Vec3 look_at(0, 0, 0);
 	Vec3 cam_up = Vec3(0, 1, 0);
