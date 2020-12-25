@@ -22,7 +22,6 @@ bool Scene::nearest_hit(const Ray &r, Hit &h) const
 {
 	Hit tmp_hit;
 	Renderable *closest;
-	tmp_hit.dir_in = r.direction;
 
 	float min_d = r.max_dist;
 	bool didhit = false;
@@ -30,7 +29,7 @@ bool Scene::nearest_hit(const Ray &r, Hit &h) const
 	{
 		if(rend->intersect(r, tmp_hit) && tmp_hit.dist < min_d)
 		{
-			if (tmp_hit.dist > min_d) continue;
+			if (tmp_hit.dist > min_d || tmp_hit.dist < 1e-3) continue;
 			min_d = tmp_hit.dist;
 			h = tmp_hit;
 			closest = rend;

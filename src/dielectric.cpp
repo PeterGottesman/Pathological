@@ -36,8 +36,8 @@ Color Dielectric::sample(const Scene &sc, Hit &hit,
 	if (r.depth == r.max_depth)
 		return sc.get_background({0.0});
 
-	Vec3 wo = rng.uniform() < 0.9 ? refract(hit.norm, hit.dir_in, 1, ior)
-		: Vec3::reflect(hit.norm, hit.dir_in);
+	Vec3 wo = rng.uniform() < 0.9 ? refract(hit.norm, r.direction, 1, ior)
+		: Vec3::reflect(hit.norm, r.direction);
 
 	Ray ro(hit.hit_pos, wo, r.depth+1);
 	if(sc.nearest_hit(ro, hit))

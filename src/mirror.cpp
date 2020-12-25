@@ -4,7 +4,7 @@
 Color Mirror::sample(const Scene &sc, Hit &hit,
 					 const Ray &r, RandGen &rng) const
 {
-	Vec3 wo = Vec3::reflect(hit.norm, hit.dir_in);
+	Vec3 wo = Vec3::reflect(hit.norm, r.direction);
 	if (r.depth == r.max_depth)
 		return sc.get_background(wo);
 

@@ -11,7 +11,6 @@ struct Hit {
 	float dist;
 	Vec3 origin;
 	Vec3 hit_pos;
-	Vec3 dir_in;
 	Vec3 norm;
 
 	const Material *mat;
