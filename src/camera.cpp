@@ -10,7 +10,7 @@ Color Camera::cast_ray(Ray &ray, RandGen &rand)
 	Hit hit;
 	if (nearest_hit(ray, hit))
 	{
-		return hit.mat->sample(this->scene, hit, ray.max_depth, rand);
+		return hit.mat->sample(this->scene, hit, ray, rand);
 	}
 
 	return scene.get_background(ray.direction);
@@ -27,7 +27,7 @@ void Camera::get_pixel_ray(Ray &r, unsigned x, unsigned y, const Vec3 &offset) c
 		+ this->dir * 1);
 
 	r.origin = location;
-	r.max_depth = MAX_DEPTH;
+	r.depth = 0;
 }
 
 bool Camera::any_hit(const Ray &r, Hit &h) const
