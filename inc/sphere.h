@@ -34,14 +34,17 @@ public:
 		// Calculate discriminant
 		float dsc = b*b - 4*a*c;
 
-		if (dsc >= 0)
+		if (dsc >= 0.0f)
 		{
 			float dsc_root = sqrt(dsc);
 			float x0 = -b + dsc_root;
 			float x1 = -b - dsc_root;
-			h.dist = (x0 < x1 ? x0 : x1)/2;
+
+			// Smallest _positive_ distance
+			h.dist = ( (x0 < x1 && x0 > 1e-6) ? x0 : x1 ) / 2.0f;
+
 			h.mat = mat;
-			return h.dist > 0;
+			return h.dist > 1e-6;
 		}
 
 		return false;
