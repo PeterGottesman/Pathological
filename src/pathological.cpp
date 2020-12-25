@@ -96,8 +96,8 @@ bool Pathological::load_default_scene(Scene &sc, Camera &cam)
 	Vec3 brd{2.0f, -3.0f, -2.0f};
 	Vec3 bld{-2.0f, -3.0f, -2.0f};
 
-	std::array<Vec3, 3> light1 = {l_fru, l_bru, l_blu};
-	std::array<Vec3, 3> light2 = {l_fru, l_blu, l_flu};
+	std::array<Vec3, 3> light1 = {l_bru, l_fru, l_blu};
+	std::array<Vec3, 3> light2 = {l_flu, l_blu, l_fru};
 
 	std::array<Vec3, 3> floor1 = {frd, brd, bld};
 	std::array<Vec3, 3> floor2 = {frd, bld, fld};
