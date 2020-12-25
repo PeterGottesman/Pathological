@@ -86,13 +86,13 @@ bool Pathological::load_default_scene(Scene &sc, Camera &cam)
 	Vec3 l_bru{0.5f, 2.99f, -0.75f};
 	Vec3 l_blu{-0.5f, 2.99f, -0.75f};
 
-	Vec3 fru{2.0f, 3.0f, 0.0f};
-	Vec3 flu{-2.0f, 3.0f, 0.0f};
+	Vec3 fru{2.0f, 3.0f, 8.0f};
+	Vec3 flu{-2.0f, 3.0f, 8.0f};
 	Vec3 bru{2.0f, 3.0f, -2.0f};
 	Vec3 blu{-2.0f, 3.0f, -2.0f};
 
-	Vec3 frd{2.0f, -3.0f, 0.0f};
-	Vec3 fld{-2.0f, -3.0f, 0.0f};
+	Vec3 frd{2.0f, -3.0f, 8.0f};
+	Vec3 fld{-2.0f, -3.0f, 8.0f};
 	Vec3 brd{2.0f, -3.0f, -2.0f};
 	Vec3 bld{-2.0f, -3.0f, -2.0f};
 
@@ -114,6 +114,10 @@ bool Pathological::load_default_scene(Scene &sc, Camera &cam)
 	std::array<Vec3, 3> back1 = {bld, brd, bru};
 	std::array<Vec3, 3> back2 = {bld, bru, blu};
 
+	// Behind camera
+	std::array<Vec3, 3> front1 = {frd, fld, fru};
+	std::array<Vec3, 3> front2 = {fld, flu, fru};
+
 	// Floor
 	sc.add_renderable(new Triangle(floor1, {0.0}, whitemat));
 	sc.add_renderable(new Triangle(floor2, {0.0}, whitemat));
@@ -133,6 +137,10 @@ bool Pathological::load_default_scene(Scene &sc, Camera &cam)
 	// Back wall
 	sc.add_renderable(new Triangle(back1, {0.0}, whitemat));
 	sc.add_renderable(new Triangle(back2, {0.0}, whitemat));
+
+	// Front wall
+	sc.add_renderable(new Triangle(front1, {0.0}, whitemat));
+	sc.add_renderable(new Triangle(front2, {0.0}, whitemat));
 
 	// Ceiling light
 	sc.add_renderable(new Triangle(light1, {0.0}, light));
