@@ -1,11 +1,11 @@
 // Includes gl - do this first
-#include "window.h"
+#include "util/window.h"
 #include <thread>
 #include <cstring>
 
 #include "pathological.h"
-#include "exporter.h"
-#include "benchmark.h"
+#include "util/exporter.h"
+#include "util/benchmark.h"
 
 const int WIDTH = 640;
 const int HEIGHT = 480;

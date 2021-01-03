@@ -8,9 +8,9 @@
 #include "camera.h"
 #include "renderthread.h"
 #include "randgen.h"
-#include "exporter.h"
+#include "util/exporter.h"
 
-#include "timer.h"
+#include "util/timer.h"
 
 class Pathological
 {

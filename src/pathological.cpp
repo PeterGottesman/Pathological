@@ -1,6 +1,6 @@
 #include "pathological.h"
-#include "sphere.h"
-#include "triangle.h"
+#include "renderable/sphere.h"
+#include "renderable/triangle.h"
 
 void Pathological::generate_initial_regions(void)
 {

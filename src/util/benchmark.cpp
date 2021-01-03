@@ -1,10 +1,10 @@
 #include <cstdio>
 
-#include "benchmark.h"
+#include "util/benchmark.h"
 #include "camera.h"
 #include "scene.h"
-#include "sphere.h"
-#include "triangle.h"
+#include "renderable/sphere.h"
+#include "renderable/triangle.h"
 #include "randgen.h"
 
 template<class Func, class ...Args>

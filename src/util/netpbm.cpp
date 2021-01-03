@@ -1,6 +1,6 @@
 #include <fstream>
 
-#include "exporter.h"
+#include "util/exporter.h"
 
 bool NetPBM::export_image(void) const
 {

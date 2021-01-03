@@ -1,4 +1,4 @@
-#include "window.h"
+#include "util/window.h"
 
 int Window::create_window(void)
 {

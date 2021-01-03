@@ -1,7 +1,7 @@
 #include "ray.h"
 #include "scene.h"
-#include "triangle.h"
-#include "sphere.h"
+#include "renderable/triangle.h"
+#include "renderable/sphere.h"
 
 bool Scene::any_hit(const Ray &r, Hit &h) const
 {

@@ -6,7 +6,6 @@
 
 #include "ray.h"
 #include "renderable.h"
-#include "light.h"
 
 class Scene
 {
