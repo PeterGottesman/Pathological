@@ -42,4 +42,9 @@ The next major tasks will be:
 
 ## Benchmarking
 Currently the benchmarks are nothing special, I have just been using
-it to check if there are major performance regressions.
+it to check if there are major performance regressions. To run this
+benchmark, you can either run `./pathological bench`, or
+`./runbench.sh <test_name>`. The `runbench.sh` script dumps the
+results into a file `benchmarks.csv`, the first column is the million
+paths per second of the triangle test, the second is that of the
+sphere test.
