@@ -76,20 +76,32 @@ int Window::load_gl(void)
 	fs_id = glCreateShader(GL_FRAGMENT_SHADER);
 
 
-	in.open("vs.vert");
+	in.open("resources/vs.vert");
 	in.seekg(0, in.end);
 	vs_len = in.tellg();
 	in.seekg(0, in.beg);
+	if (vs_len <= 0)
+	{
+		printf("Vertex shader not valid");
+		return -1;
+	}
+
 	vs = new char[vs_len];
 	in.read(vs, vs_len);
 	in.close();
 
 	glShaderSource(vs_id, 1, &vs, &vs_len);
 
-	in.open("fs.frag");
+	in.open("resources/fs.frag");
 	in.seekg(0, in.end);
 	fs_len = in.tellg();
 	in.seekg(0, in.beg);
+	if (fs_len <= 0)
+	{
+		printf("Vertex shader not valid");
+		return -1;
+	}
+
 	fs = new char[fs_len];
 	in.read(fs, fs_len);
 	in.close();

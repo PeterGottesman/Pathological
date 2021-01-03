@@ -31,6 +31,7 @@ The next major tasks will be:
 ## Project organization
 ```
 .
+├── resources       # Loadable resources, currently just shaders
 ├── inc             # Core project headers
 │   ├── renderable  # Different renderable objects (sphere, mesh, etc.)
 │   └── util        # Utilities for output and debugging
