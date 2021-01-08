@@ -4,15 +4,36 @@
 #include <cstring>
 
 #include "pathological.h"
-#include "util/exporter.h"
+
+#include "util/argparse.h"
 #include "util/benchmark.h"
+#include "util/exporter.h"
 
 const int WIDTH = 640;
 const int HEIGHT = 480;
 
 int main(int argc, char **argv)
 {
-	if (argc > 1 && strncmp(argv[1], "bench", 6) == 0)
+	// Arguments to parse
+	bool benchmark;
+	int width;
+	int height;
+
+	ArgParse parser(argc, argv);
+	parser.add_arg("benchmark", "Run build in benchmarks", false);
+	parser.add_arg("width", "Render image width", true, 'w');
+	parser.add_arg("height", "Render image height", true, 'h');
+	if (parser.parse() != 0)
+	{
+		fprintf(stderr, "Failed to parse arguments\n");
+		return 1;
+	}
+
+	parser.get_arg("benchmark", benchmark, false);
+	parser.get_arg("width", width, WIDTH);
+	parser.get_arg("height", height, HEIGHT);
+
+	if (benchmark)
 	{
 		printf("Running single threaded tests\n");
 		Benchmark::bench_spheres();
@@ -20,9 +41,7 @@ int main(int argc, char **argv)
 		return 0;
 	}
 
-	Window win(WIDTH, HEIGHT, "Pathological path tracer");
-	int width = WIDTH;
-	int height = HEIGHT;
+	Window win(width, height, "Pathological path tracer");
 
 	Pathological app(width, height);
 	void *pixels = app.get_texture();
