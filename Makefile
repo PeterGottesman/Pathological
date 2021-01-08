@@ -17,7 +17,7 @@ default: $(BUILD_DIRS) $(EXEC)
 $(EXEC): $(OBJS)
 	$(CXX) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
-$(BUILD_DIRS): build/
+$(BUILD_DIRS):
 	[ -d "$@" ] || mkdir $@
 
 build/%.o: src/%.cpp
