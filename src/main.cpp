@@ -18,11 +18,14 @@ int main(int argc, char **argv)
 	bool benchmark;
 	int width;
 	int height;
+	int nthreads;
 
 	ArgParse parser(argc, argv);
 	parser.add_arg("benchmark", "Run build in benchmarks", false);
 	parser.add_arg("width", "Render image width", true, 'w');
 	parser.add_arg("height", "Render image height", true, 'h');
+	parser.add_arg("nthreads", "Number of render threads", true, 'n');
+
 	if (parser.parse() != 0)
 	{
 		fprintf(stderr, "Failed to parse arguments\n");
@@ -32,6 +35,7 @@ int main(int argc, char **argv)
 	parser.get_arg("benchmark", benchmark, false);
 	parser.get_arg("width", width, WIDTH);
 	parser.get_arg("height", height, HEIGHT);
+	parser.get_arg("nthreads", nthreads, (int)std::thread::hardware_concurrency());
 
 	if (benchmark)
 	{
@@ -43,7 +47,7 @@ int main(int argc, char **argv)
 
 	Window win(width, height, "Pathological path tracer");
 
-	Pathological app(width, height);
+	Pathological app(width, height, nthreads);
 	void *pixels = app.get_texture();
 	NetPBM exp("traced.ppm", width, height, (Color *)pixels);
 
