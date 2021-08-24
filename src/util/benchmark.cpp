@@ -24,7 +24,7 @@ void Benchmark::bench_tris(int samples)
 	RandGen rng(BENCH_SEED);
 
 	Scene sc(Color(0.0));
-	Camera cam(sc, rng);
+	Camera cam(sc, 1, rng);
 
 	Lambertian lamb({0.2}, {1.0});
 
@@ -82,7 +82,7 @@ void Benchmark::bench_spheres(int samples)
 	RandGen rng(BENCH_SEED);
 
 	Scene sc(Color(0.0));
-	Camera cam(sc, rng);
+	Camera cam(sc, 1, rng);
 
 	Lambertian lamb({0.2}, {1.0});
 

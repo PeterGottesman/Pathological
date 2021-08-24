@@ -31,13 +31,15 @@ private:
 	std::vector<RenderRegion> regions;
 	Exporter *exporter;
 
+	unsigned spp;
+
 
 public:
-	Pathological(unsigned w, unsigned h,
+	Pathological(unsigned w, unsigned h, unsigned spp,
 				 unsigned numthreads = std::thread::hardware_concurrency())
 		: rand(RandGen::rand_dev_seeded_generator(seed)),
-		  sc(), cam(sc, rand), tex_width(w),
-		  tex_height(h), nthreads(numthreads)
+		  sc(), cam(sc, spp, rand), tex_width(w),
+		  tex_height(h), nthreads(numthreads), spp(spp)
 	{
 		cam.set_image_props(tex_width, tex_height, 45);
 		tex = cam.get_image_buf();
@@ -85,7 +87,7 @@ public:
 
 		printf("Ran for %.4f ms\n", timer.get_ms());
 		printf("Computed %.4f million paths per second\n",
-			   timer.get_cnt_per_ms(num_iters)/1000);
+			   timer.get_cnt_per_ms(num_iters)/1000 * spp);
 
 		exporter->export_image();
 

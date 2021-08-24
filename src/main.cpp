@@ -11,6 +11,7 @@
 
 const int WIDTH = 640;
 const int HEIGHT = 480;
+const int SPP = 64;
 
 int main(int argc, char **argv)
 {
@@ -19,12 +20,14 @@ int main(int argc, char **argv)
 	int width;
 	int height;
 	int nthreads;
+	int spp;
 
 	ArgParse parser(argc, argv);
 	parser.add_arg("benchmark", "Run build in benchmarks", false);
 	parser.add_arg("width", "Render image width", true, 'w');
 	parser.add_arg("height", "Render image height", true, 'h');
 	parser.add_arg("nthreads", "Number of render threads", true, 'n');
+	parser.add_arg("samples", "Number of samples per pixel per frame", true, 's');
 
 	if (parser.parse() != 0)
 	{
@@ -36,6 +39,7 @@ int main(int argc, char **argv)
 	parser.get_arg("width", width, WIDTH);
 	parser.get_arg("height", height, HEIGHT);
 	parser.get_arg("nthreads", nthreads, (int)std::thread::hardware_concurrency());
+	parser.get_arg("samples", spp, SPP);
 
 	if (benchmark)
 	{
@@ -47,7 +51,7 @@ int main(int argc, char **argv)
 
 	Window win(width, height, "Pathological path tracer");
 
-	Pathological app(width, height, nthreads);
+	Pathological app(width, height, spp, nthreads);
 	void *pixels = app.get_texture();
 	NetPBM exp("traced.ppm", width, height, (Color *)pixels);
 

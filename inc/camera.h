@@ -22,6 +22,7 @@ class Camera
 	Scene &scene;
 	Color *image = nullptr;
 	unsigned *iters = nullptr;
+	unsigned spp;
 
 	Vec3 location;				// Coordinates of camera in world
 								// space
@@ -39,12 +40,12 @@ class Camera
 	float hfov, vfov; 			   // Vert && Horiz field of view
 
 public:
-	Camera(Scene &scene, RandGen &rng)
-		:  rand(rng), scene(scene) {}
+	Camera(Scene &scene, unsigned spp, RandGen &rng)
+		:  rand(rng), scene(scene), spp(spp) {}
 
-	Camera(Scene &scene, Vec3 loc, Vec3 look,
+	Camera(Scene &scene, unsigned spp, Vec3 loc, Vec3 look,
 		   Vec3 up_dir, int w, int h, int fov, RandGen &rng)
-		: rand(rng), scene(scene),
+		: rand(rng), scene(scene), spp(spp),
 		  location(loc), look_point(look), up(up_dir)
 		{
 			look_at(look_point, up);
@@ -66,6 +67,7 @@ public:
 
 	Color *get_image_buf(void) const { return image; }
 	unsigned *get_iters_buf(void) const { return iters; }
+	unsigned get_spp(void) { return spp; }
 
 	Color *make_image_buf(void *image_buf)
 	{
@@ -113,6 +115,7 @@ public:
 		this->location = loc;
 		look_at(this->look_point, this->up);
 	}
+
 
 	void look_at(const Vec3 &point, const Vec3 &up)
 	{
