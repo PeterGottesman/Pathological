@@ -1,6 +1,7 @@
 #include "util/argparse.h"
 
 #include <cstdio>
+#include <typeinfo>
 
 int ArgParse::add_arg(const std::string &long_arg, const std::string &help,
 					   bool requires_param, char short_arg)
