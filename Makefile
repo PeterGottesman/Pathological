@@ -12,10 +12,10 @@ CFLAGS=-ggdb -Ofast $(pkg-config --cflags $(LIBS)) -Wall
 CFLAGS+=-I./inc -march=native
 LDFLAGS=`pkg-config --libs $(LIBS)` -lpthread
 
-default: $(BUILD_DIRS) $(EXEC)
+default: $(EXEC)
 
-$(EXEC): $(OBJS)
-	$(CXX) $(CFLAGS) $(LDFLAGS) -o $@ $^
+$(EXEC): $(BUILD_DIRS) $(OBJS)
+	$(CXX) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJS)
 
 $(BUILD_DIRS):
 	[ -d "$@" ] || mkdir $@
