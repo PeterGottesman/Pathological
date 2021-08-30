@@ -2,6 +2,7 @@ SOURCE_DIRS=$(shell find ./src/ -type d)
 BUILD_DIRS=$(SOURCE_DIRS:./src/%=./build/%)
 
 SOURCES=$(shell find ./src/ -type f -iname "*.cpp")
+INCLUDES=$(shell find ./inc/ -type f -iname "*.h")
 OBJS=$(SOURCES:./src/%.cpp=build/%.o)
 EXEC=pathological
 
@@ -20,7 +21,7 @@ $(EXEC): $(BUILD_DIRS) $(OBJS)
 $(BUILD_DIRS):
 	[ -d "$@" ] || mkdir $@
 
-build/%.o: src/%.cpp
+build/%.o: src/%.cpp $(INCLUDES)
 	$(CXX) $(CFLAGS) -c -o $@ $<
 
 clean:
