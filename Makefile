@@ -6,7 +6,7 @@ INCLUDES=$(shell find ./inc/ -type f -iname "*.h")
 OBJS=$(SOURCES:./src/%.cpp=build/%.o)
 EXEC=pathological
 
-LIBS=glfw3 glew 
+LIBS=gl glew glfw3
 
 CXX=g++
 CFLAGS=-ggdb -Ofast $(pkg-config --cflags $(LIBS)) -Wall
@@ -16,7 +16,7 @@ LDFLAGS=`pkg-config --libs $(LIBS)` -lpthread
 default: $(EXEC)
 
 $(EXEC): $(BUILD_DIRS) $(OBJS)
-	$(CXX) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJS)
+	$(CXX) $(CFLAGS) -o $@ $(OBJS) $(LDFLAGS)
 
 $(BUILD_DIRS):
 	[ -d "$@" ] || mkdir $@
