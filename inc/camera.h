@@ -37,7 +37,7 @@ class Camera
 
 	unsigned width, height;
 	float aspect;
-	float hfov, vfov; 			   // Vert && Horiz field of view
+	float hfov, vfov; 			// Vert && Horiz field of view
 
 public:
 	Camera(Scene &scene, unsigned spp, RandGen &rng)

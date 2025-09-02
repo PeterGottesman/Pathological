@@ -10,7 +10,7 @@ bool Scene::any_hit(const Ray &r, Hit &h) const
 		if(rend->intersect(r, h))
 		{
 			h.hit_pos = r.origin + r.direction * h.dist;
-			rend->get_normal(h.hit_pos, h.norm);
+			h.norm = rend->get_normal(h.hit_pos);
 			return true;
 		}
 	}
@@ -40,7 +40,7 @@ bool Scene::nearest_hit(const Ray &r, Hit &h) const
 	if (didhit)
 	{
 		h.hit_pos = r.origin + r.direction * h.dist;
-		closest->get_normal(h.hit_pos, h.norm);
+		h.norm = closest->get_normal(h.hit_pos);
 	}
 
 	return didhit;

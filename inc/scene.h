@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 #include "ray.h"
-#include "renderable.h"
+#include "renderable/renderable.h"
 
 class Scene
 {
@@ -24,7 +24,6 @@ public:
 
 	Color get_background(const Vec3 &dir) const
 	{
-		// Facing fwd is black, behind is a gradient
 		return bg;
 	}
 	void set_background(const Color &c) { bg = c; }

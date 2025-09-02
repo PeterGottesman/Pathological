@@ -29,7 +29,7 @@ struct Ray {
 		float ior = 1.0f)
 		: max_depth(max_depth), max_dist(max_dist), ior(ior) {}
 
-	Ray(Vec3 ori, Vec3 dir,
+	Ray(const Vec3& ori, const Vec3& dir,
 		int depth=0,
 		float ior = 1.0f,
 		int max_depth=MAX_DEPTH,

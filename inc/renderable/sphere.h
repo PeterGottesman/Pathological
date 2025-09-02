@@ -54,9 +54,4 @@ public:
 	{
 			return (pt - center)/radius;
 	}
-
-	void get_normal(const Vec3 &pt, Vec3 &norm) override
-	{
-			norm = (pt - center)/radius;
-	}
 };

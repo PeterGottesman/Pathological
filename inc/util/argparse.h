@@ -60,5 +60,7 @@ public:
 		return err;
 	}
 
-	int parse(void);
+	void print_help();
+
+	int parse();
 };

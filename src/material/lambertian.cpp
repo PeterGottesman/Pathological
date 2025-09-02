@@ -59,6 +59,5 @@ Color Lambertian::sample(const Scene &sc,
 
 	}
 
-	// return r.direction;
 	return ke + diffuse;
 }

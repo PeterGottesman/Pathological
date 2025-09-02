@@ -1,7 +1,6 @@
 #include "util/argparse.h"
 
 #include <cstdio>
-#include <typeinfo>
 
 int ArgParse::add_arg(const std::string &long_arg, const std::string &help,
 					   bool requires_param, char short_arg)
@@ -14,16 +13,6 @@ int ArgParse::add_arg(const std::string &long_arg, const std::string &help,
 		success &= short_args.insert({short_arg, long_arg}).second;
 
 	return success ? 0 : -1;
-}
-
-// Default get_arg for unsupported types
-template <class T>
-int ArgParse::get_arg(std::string long_arg, T &value)
-{
-	fprintf(stderr, "Argument type not supported: %s\n", typeid(value).name());
-	fprintf(stderr, "You may want to run the above message through `c++filt -t`\n");
-
-	return -1;
 }
 
 template <class T>
@@ -58,12 +47,19 @@ template<> int ArgParse::get_arg(std::string long_arg, bool &value)
 {
 	return interpret_arg<bool>(long_arg, value, "bool",
 							  [](std::string literal, bool &value) -> int {
-								  if (literal == "true")
+                                fprintf(stderr, "parsing bool: '%s'\n", literal.c_str());
+                                if (literal == "true" || literal == "")
+                                {
 									  value = true;
-								  if (literal == "false")
+                                }
+                                else if (literal == "false")
+                                {
 									  value = false;
-								  else
-									  return -1;
+                                }
+                                else
+                                {
+                                  return -1;
+                                }
 
 								  return 0;
 							  }
@@ -90,7 +86,26 @@ template<> int ArgParse::get_arg(std::string long_arg, std::string &value)
 		);
 }
 
-int ArgParse::parse(void)
+void ArgParse::print_help()
+{
+  fprintf(stderr, "Usage: %s [options]\nOptions:\n", argv[0]);
+  for (auto& [_, argument] : args) {
+    if (argument.has_short_arg) {
+      fprintf(stderr, "-%c, ", argument.short_arg);
+    }
+
+    fprintf(stderr, "--%s", argument.long_arg.c_str());
+
+    if (argument.requires_param) {
+      fprintf(stderr, "=<param>");
+    }
+
+    fprintf(stderr, "\t\t\t%s\n", argument.help.c_str());
+
+  }
+}
+
+int ArgParse::parse()
 {
 	// a valid argument may be one of:
 	// "-<char>", "--<str>", "-<char>=value"--<str>=value"

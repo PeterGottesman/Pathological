@@ -9,13 +9,21 @@ class Scene;
 class Material
 {
 public:
-	Material() {};
+  Material() = default;
 
 	virtual Color sample(const Scene &sc, Hit &hit,
-						 const Ray &r, RandGen &rng) const
-	{
-		return hit.norm;
-	}
+						 const Ray &r, RandGen &rng) const = 0;
+};
+
+class DebugNormMaterial : public Material
+{
+public:
+  DebugNormMaterial() = default;
+
+	Color sample(const Scene &sc, Hit &hit,
+						 const Ray &r, RandGen &rng) const override {
+      return hit.norm;
+    }
 };
 
 class Lambertian: public Material
@@ -24,7 +32,7 @@ private:
 	// diffuse, emissive
 	Color kd, ke;
 public:
-	Lambertian(Color kd, Color ke)
+	Lambertian(const Color& kd, const Color& ke)
 		: kd(kd), ke(ke) {}
 
 	Color sample(const Scene &sc, Hit &hit,

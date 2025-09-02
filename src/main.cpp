@@ -17,6 +17,7 @@ int main(int argc, char **argv)
 {
 	// Arguments to parse
 	bool benchmark;
+    bool help;
 	int width;
 	int height;
 	int nthreads;
@@ -24,6 +25,7 @@ int main(int argc, char **argv)
 
 	ArgParse parser(argc, argv);
 	parser.add_arg("benchmark", "Run build in benchmarks", false);
+	parser.add_arg("help", "Print help text", false);
 	parser.add_arg("width", "Render image width", true, 'w');
 	parser.add_arg("height", "Render image height", true, 'h');
 	parser.add_arg("nthreads", "Number of render threads", true, 'n');
@@ -32,8 +34,16 @@ int main(int argc, char **argv)
 	if (parser.parse() != 0)
 	{
 		fprintf(stderr, "Failed to parse arguments\n");
+        parser.print_help();
 		return 1;
 	}
+
+	parser.get_arg("help", help, false);
+    if (help)
+    {
+        parser.print_help();
+        return 0;
+    }
 
 	parser.get_arg("benchmark", benchmark, false);
 	parser.get_arg("width", width, WIDTH);
