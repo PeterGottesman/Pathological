@@ -24,6 +24,14 @@ $(BUILD_DIRS):
 build/%.o: src/%.cpp $(INCLUDES)
 	$(CXX) $(CFLAGS) -c -o $@ $<
 
+build/tests:
+	[ -d "$@" ] || mkdir -p $@
+
+build/tests/test_vec3: tests/vec3_test.cpp $(INCLUDES) build/tests
+	$(CXX) $(CFLAGS) -o $@ $<
+
+test: build/tests build/tests/test_vec3
+
 clean:
 	rm -rf build pathological
 
