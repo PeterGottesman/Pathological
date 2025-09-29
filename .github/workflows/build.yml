@@ -1,0 +1,25 @@
+name: ci-build-test
+
+on:
+  push:
+    branches: [ "github-actions" ]
+  pull_request:
+    branches: [ "github-actions" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y \
+          libgl1-mesa-dev \
+          libglew-dev \
+          libglfw3-dev \
+          pkg-config 
+    - name: build
+      run: make
