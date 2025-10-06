@@ -9,7 +9,7 @@
 #include "util/benchmark.h"
 #include "util/exporter.h"
 
-const int WIDTH = 640
+const int WIDTH = 640;
 const int HEIGHT = 480;
 const int SPP = 64;
 

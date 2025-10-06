@@ -2,9 +2,13 @@ name: ci-build-test
 
 on:
   push:
-    branches: [ "github-actions" ]
+    branches: 
+      - github-actions
+      - master
   pull_request:
-    branches: [ "github-actions" ]
+    branches:
+      - github-actions
+      - master
 
 jobs:
   build:
