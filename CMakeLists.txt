@@ -25,13 +25,6 @@ file(COPY ${PROJECT_SOURCE_DIR}/resources DESTINATION ${PROJECT_BINARY_DIR})
 
 add_executable(${PROJECT_NAME} ${SOURCES_FILES})
 
-link_directories(/usr/lib64)
-
-target_compile_definitions(${PROJECT_NAME} PRIVATE
-    GLEW_STATIC
-    _GLFW_X11
-)
-
 target_include_directories(${PROJECT_NAME} PRIVATE inc
 						resources
 )
@@ -46,8 +39,6 @@ target_compile_options(${PROJECT_NAME} PRIVATE
 target_link_libraries(${PROJECT_NAME} PUBLIC
 	GLEW
     	GL
-    	X11
-    	GLU
     	glfw
 	pthread
 )
