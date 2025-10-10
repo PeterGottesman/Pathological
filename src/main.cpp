@@ -75,7 +75,7 @@ int main(int argc, char **argv)
 			}
 
 			// Print  triangles
-			for (size_t i = 0; i < obj.tris.size(); ++i) {
+			for (size_t i = 0; i < std::min<size_t>(obj.tris.size(), 5); ++i) {
 				const auto& t = obj.tris[i];
 				std::cout << "Tri" << i << "  v:("
 						<< t.v[0] << "," << t.v[1] << "," << t.v[2] << ")  "
