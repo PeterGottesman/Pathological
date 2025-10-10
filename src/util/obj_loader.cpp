@@ -3,6 +3,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <cctype>
+#include <iostream>
 
 namespace {
 //triming skipping spaces    
@@ -72,14 +73,24 @@ ObjData load_obj(const std::string& path){
             double x,y,z; iss >> x >> y >> z;
             out.VN.push_back(Vec3{static_cast<float>(x), static_cast<float>(y), static_cast<float>(z)});
         } else if(tag == "f"){
-            // triangles
-            std::string a,b,c;
-            if(!(iss >> a >> b >> c)) continue;
+            // only triangles
+            std::vector<std::string> toks;
+            for (std::string tok; iss >> tok; ) toks.push_back(tok);
+
+            if (toks.size() != 3) {
+                std::cerr << "Error: face must have exactly 3 vertices, found "
+                        << toks.size() << " (" << line << ")\n";
+                
+                out.V.clear();
+                out.VN.clear();
+                out.tris.clear();
+                break;
+            }
 
             ObjData::Tri T{};
-            parse_face_vertex(a, T.v[0], T.vn[0]);
-            parse_face_vertex(b, T.v[1], T.vn[1]);
-            parse_face_vertex(c, T.v[2], T.vn[2]);
+            parse_face_vertex(toks[0], T.v[0], T.vn[0]);
+            parse_face_vertex(toks[1], T.v[1], T.vn[1]);
+            parse_face_vertex(toks[2], T.v[2], T.vn[2]);
             out.tris.push_back(T);
         }
         
