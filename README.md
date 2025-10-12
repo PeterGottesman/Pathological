@@ -41,6 +41,21 @@ The next major tasks will be:
     └── util
 ```
 
+## CMake and VCPKG Installation
+To build the executable this project uses CMake which requires CMake `sudo apt
+install cmake` and VCPKG which a guide for installation can be found at
+`https://lindevs.com/install-vcpkg-on-ubuntu`. Once VCPKG is installed
+run `sudo vcpkg install` if any errors are found check the message for 
+libraries that may need to be installed. 
+
+## Building Executable
+To build the executable you can optional create a directory to house all build 
+files that cmake will create (this makes clean up easier). Running
+'cmake -S ./ -B <build_directory>' if you didn't create a build directory use
+'./'. Once then cmake command has been ran you can run `make` from the 
+directory that cmake was built in and after running make there will be a 
+`./pathological` that can be ran.
+
 ## Benchmarking
 Currently the benchmarks are nothing special, I have just been using
 it to check if there are major performance regressions. To run this
