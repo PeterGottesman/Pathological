@@ -51,8 +51,8 @@ libraries that may need to be installed.
 ## Building Executable
 To build the executable you can optional create a directory to house all build 
 files that cmake will create (this makes clean up easier). Running
-'cmake -S ./ -B <build_directory>' if you didn't create a build directory use
-'./'. Once then cmake command has been ran you can run `make` from the 
+`cmake -S ./ -B <build_directory>` if you didn't create a build directory use
+`./`. Once then cmake command has been ran you can run `make` from the 
 directory that cmake was built in and after running make there will be a 
 `./pathological` that can be ran.
 
