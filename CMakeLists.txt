@@ -3,18 +3,19 @@ cmake_minimum_required(VERSION 3.25)
 project(pathological VERSION 1.0 LANGUAGES CXX)
 
 set(SOURCES_FILES ${PROJECT_SOURCE_DIR}/src/main.cpp
-                ${PROJECT_SOURCE_DIR}/src/camera.cpp
-                ${PROJECT_SOURCE_DIR}/src/pathological.cpp
-                ${PROJECT_SOURCE_DIR}/src/randgen.cpp
-                ${PROJECT_SOURCE_DIR}/src/renderthread.cpp
-                ${PROJECT_SOURCE_DIR}/src/scene.cpp
-                ${PROJECT_SOURCE_DIR}/src/util/argparse.cpp
-                ${PROJECT_SOURCE_DIR}/src/util/benchmark.cpp
-                ${PROJECT_SOURCE_DIR}/src/util/netpbm.cpp
-                ${PROJECT_SOURCE_DIR}/src/util/window.cpp
-                ${PROJECT_SOURCE_DIR}/src/material/dielectric.cpp
-                ${PROJECT_SOURCE_DIR}/src/material/mirror.cpp
-                ${PROJECT_SOURCE_DIR}/src/material/lambertian.cpp
+                  ${PROJECT_SOURCE_DIR}/src/camera.cpp
+                  ${PROJECT_SOURCE_DIR}/src/pathological.cpp
+                  ${PROJECT_SOURCE_DIR}/src/randgen.cpp
+                  ${PROJECT_SOURCE_DIR}/src/renderthread.cpp
+                  ${PROJECT_SOURCE_DIR}/src/scene.cpp
+                  ${PROJECT_SOURCE_DIR}/src/util/argparse.cpp
+                  ${PROJECT_SOURCE_DIR}/src/util/benchmark.cpp
+                  ${PROJECT_SOURCE_DIR}/src/util/netpbm.cpp
+                  ${PROJECT_SOURCE_DIR}/src/util/window.cpp
+		  ${PROJECT_SOURCE_DIR}/src/util/obj_loader.cpp
+                  ${PROJECT_SOURCE_DIR}/src/material/dielectric.cpp
+                  ${PROJECT_SOURCE_DIR}/src/material/mirror.cpp
+                  ${PROJECT_SOURCE_DIR}/src/material/lambertian.cpp
 )
 set(TEST_SOURCES ${PROJECT_SOURCE_DIR}/tests/vec3_test.cpp
 )
