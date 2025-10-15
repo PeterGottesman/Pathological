@@ -49,11 +49,12 @@ run `sudo vcpkg install` if any errors are found check the message for
 libraries that may need to be installed. 
 
 ## Building Executable
-To build the executable you can optional create a directory to house all build 
-files that cmake will create. Go into build directory and run `cmake ..` 
-if you didn't create a build directory use ./`. Once then cmake command has
-been ran you can run `make` from the directory that cmake was built in and
-after running make there will be a ./pathological`.
+To build the executable you can create a directory to house all build 
+files that cmake will create `mkdir build`. Go into build directory `cd build`
+and run `cmake ..`. Once the cmake command has been ran you can run `make` 
+from the directory that cmake was built in and after running make there will be
+a ./pathological`. You can run the tests the cmake creates by running `ctest`
+in the build directory.
 
 ## Benchmarking
 Currently the benchmarks are nothing special, I have just been using
