@@ -1,4 +1,4 @@
-name: ci-build-test
+name: ci-build
 
 on:
   push:
@@ -11,19 +11,32 @@ on:
       - master
 
 jobs:
-  build:
-
+  build-project:
+    name: Build Project
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Install dependencies
-      run: |
-        sudo apt update
-        sudo apt install -y \
+      - name: Checkout Project
+        uses: actions/checkout@v4.2.2
+        
+      # This is a placeholder until I get vcpkg to work with this action.
+      # TODO: Make action to handle package management with VCPKG. This .yml file will depend on that one. 
+      - name: Install Deps
+        run: |
+          sudo apt update
+          sudo apt install -y \
           libgl1-mesa-dev \
           libglew-dev \
           libglfw3-dev \
-          pkg-config 
-    - name: build
-      run: make
+          pkg-config
+
+      - name: Install CMake
+        uses: jwlawson/actions-setup-cmake@v2
+
+      - name: Build Project
+        run: |
+         mkdir build
+         cd build
+         cmake ..
+
+            
+      
