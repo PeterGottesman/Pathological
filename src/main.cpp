@@ -13,7 +13,7 @@
 const int WIDTH = 640;
 const int HEIGHT = 480;
 const int SPP = 64;
-std::string obj_path;
+
 
 int main(int argc, char **argv)
 {
@@ -24,6 +24,7 @@ int main(int argc, char **argv)
 	int height;
 	int nthreads;
 	int spp;
+	std::string obj_path;
 
 	ArgParse parser(argc, argv);
 	parser.add_arg("benchmark", "Run build in benchmarks", false);
@@ -61,27 +62,7 @@ int main(int argc, char **argv)
 	if (!obj_path.empty()){
 		try {
 			//load the obj_path and 
-			ObjData obj = load_obj(obj_path);
-
-			std::cout << "Loaded OBJ: " << argv[1] << "\n";
-			std::cout << "Vertices: " << obj.V.size()
-					<< ", Normals: " << obj.VN.size()
-					<< ", Triangles: " << obj.tris.size() << "\n\n";
-
-			// Print first few vertices
-			for (size_t i = 0; i < std::min<size_t>(obj.V.size(), 5); ++i) {
-				const auto& v = obj.V[i];
-				std::cout << "v" << i << " = (" << v.x << ", " << v.y << ", " << v.z << ")\n";
-			}
-
-			// Print  triangles
-			for (size_t i = 0; i < std::min<size_t>(obj.tris.size(), 5); ++i) {
-				const auto& t = obj.tris[i];
-				std::cout << "Tri" << i << "  v:("
-						<< t.v[0] << "," << t.v[1] << "," << t.v[2] << ")  "
-						<< "vn:("
-						<< t.vn[0] << "," << t.vn[1] << "," << t.vn[2] << ")\n";
-			}
+			ObjData obj = ObjData::load_obj(obj_path);
 
 		} catch (const std::exception& e) {
 			std::cerr << "Error: " << e.what() << '\n';

@@ -5,6 +5,7 @@
 #include <cctype>
 #include <iostream>
 
+
 namespace {
 //triming skipping spaces    
 std::string trim(const std::string& s){
@@ -49,7 +50,7 @@ void parse_face_vertex(const std::string& tok, int& v, int& vn) {
 
 } // namespace
 
-ObjData load_obj(const std::string& path){
+ObjData ObjData::load_obj(const std::string& path){
     std::ifstream in(path);
     
     if(!in) throw std::runtime_error("Failed to open OBJ: " + path);
@@ -67,24 +68,22 @@ ObjData load_obj(const std::string& path){
         
 
         if(tag == "v"){
-            double x,y,z; iss >> x >> y >> z;
-            out.V.push_back(Vec3{static_cast<float>(x), static_cast<float>(y), static_cast<float>(z)});
+            float x, y, z;
+            iss >> x >> y >> z;
+            out.V.push_back(Vec3{x, y, z});
         } else if(tag == "vn"){
-            double x,y,z; iss >> x >> y >> z;
-            out.VN.push_back(Vec3{static_cast<float>(x), static_cast<float>(y), static_cast<float>(z)});
+            float x, y, z;
+            iss >> x >> y >> z;
+            out.VN.push_back(Vec3{x,y,z});
+            
         } else if(tag == "f"){
             // only triangles
             std::vector<std::string> toks;
             for (std::string tok; iss >> tok; ) toks.push_back(tok);
 
             if (toks.size() != 3) {
-                std::cerr << "Error: face must have exactly 3 vertices, found "
-                        << toks.size() << " (" << line << ")\n";
-                
-                out.V.clear();
-                out.VN.clear();
-                out.tris.clear();
-                break;
+                throw std::runtime_error("face must have exactly 3 vertices, found "
+                         + std::to_string(toks.size()) + " (" + line + ")");
             }
 
             ObjData::Tri T{};
