@@ -16,4 +16,6 @@ struct ObjData {
     static ObjData load_obj(const std::string& path);
 };
 
-
+// Load .obj with: v, vn, f (supports "f a b c" and "f a//na b//nb c//nc"
+ObjData load_obj_file(const std::string& path);
+ObjData load_obj_stream(std::istream& istream);

@@ -50,15 +50,17 @@ void parse_face_vertex(const std::string& tok, int& v, int& vn) {
 
 } // namespace
 
-ObjData ObjData::load_obj(const std::string& path){
+ObjData load_obj_file(const std::string& path) {
     std::ifstream in(path);
-    
     if(!in) throw std::runtime_error("Failed to open OBJ: " + path);
-
+    return load_obj_stream(in);
+}
+    
+ObjData load_obj_stream(std::istream& istream) {
     ObjData out;
     std::string line;
 
-    while(std::getline(in, line)){
+    while(std::getline(istream, line)){
         line = trim(line);
         if(line.empty() || line[0]=='#') continue;
         std::istringstream iss(line);
