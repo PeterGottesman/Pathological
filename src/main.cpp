@@ -22,6 +22,7 @@ int main(int argc, char **argv)
 	int height;
 	int nthreads;
 	int spp;
+	std::string obj_path;
 
 	ArgParse parser(argc, argv);
 	parser.add_arg("benchmark", "Run build in benchmarks", false);
