@@ -13,7 +13,7 @@ set(SOURCES_FILES ${PROJECT_SOURCE_DIR}/src/main.cpp
                   ${PROJECT_SOURCE_DIR}/src/util/benchmark.cpp
                   ${PROJECT_SOURCE_DIR}/src/util/netpbm.cpp
 		  ${PROJECT_SOURCE_DIR}/src/util/window.cpp
-		  #${PROJECT_SOURCE_DIR}/src/util/obj_loader.cpp
+		  ${PROJECT_SOURCE_DIR}/src/util/obj_loader.cpp
                   ${PROJECT_SOURCE_DIR}/src/material/dielectric.cpp
                   ${PROJECT_SOURCE_DIR}/src/material/mirror.cpp
                   ${PROJECT_SOURCE_DIR}/src/material/lambertian.cpp
