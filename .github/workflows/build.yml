@@ -17,8 +17,17 @@ jobs:
     steps:
       - name: Checkout Project
         uses: actions/checkout@v4.2.2
-        
-      # This is a placeholder until I get vcpkg to work with this action.
+      
+      - name: Install CMake
+        uses: jwlawson/actions-setup-cmake@v2
+
+      #- name: Setup VCPkg
+      #  uses: lukka/run-vcpkg@v11
+      #  with: 
+       #   vcpkgGitCommitId: '74e6536215718009aae747d86d84b78376bf9e09' # 2025.10.17
+       #   vcpkgJsonGlob: ${{ github.workspace }}/vcpkg.json
+      
+       # This is a placeholder until I get vcpkg to work with this action.
       # TODO: Make action to handle package management with VCPKG. This .yml file will depend on that one. 
       - name: Install Deps
         run: |
@@ -29,15 +38,14 @@ jobs:
           libglfw3-dev \
           pkg-config
 
-      - name: Install CMake
-        uses: jwlawson/actions-setup-cmake@v2
-
       - name: Build Project
         run: |
          mkdir build
          cd build
-         cmake ..
+         cmake .. \
+         
 
       - name: Run make
-        run: make
+        run: 
+         make
       
