@@ -53,7 +53,7 @@ To build the executable you can create a directory to house all build
 files that cmake will create `mkdir build`. Go into build directory `cd build`
 and run `cmake ..`. Once the cmake command has been ran you can run `make` 
 from the directory that cmake was built in and after running make there will be
-a ./pathological`. You can run the tests the cmake creates by running `ctest`
+a `./pathological`. You can run the tests the cmake creates by running `ctest`
 in the build directory.
 
 ## Benchmarking

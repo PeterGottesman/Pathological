@@ -13,7 +13,7 @@ set(SOURCES_FILES ${PROJECT_SOURCE_DIR}/src/main.cpp
                   ${PROJECT_SOURCE_DIR}/src/util/benchmark.cpp
                   ${PROJECT_SOURCE_DIR}/src/util/netpbm.cpp
 		  ${PROJECT_SOURCE_DIR}/src/util/window.cpp
-		  #${PROJECT_SOURCE_DIR}/src/util/obj_loader.cpp
+		  ${PROJECT_SOURCE_DIR}/src/util/obj_loader.cpp
                   ${PROJECT_SOURCE_DIR}/src/material/dielectric.cpp
                   ${PROJECT_SOURCE_DIR}/src/material/mirror.cpp
                   ${PROJECT_SOURCE_DIR}/src/material/lambertian.cpp
@@ -34,8 +34,7 @@ add_test(NAME vec3_test COMMAND vec3_test)
 set (passRegex "^Test passed" "^All ok")
 set (failRegex "Error" "Fail")
 
-target_include_directories(${PROJECT_NAME} PRIVATE inc)
-target_include_directories(vec3_test PRIVATE inc)
+include_directories(BEFORE inc)
 
 target_compile_options(${PROJECT_NAME} PRIVATE
     -ggdb         
