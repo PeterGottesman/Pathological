@@ -6,17 +6,17 @@ bool test_success = true;
 bool CheckVec3Expected(Vec3 a, float i, float j, float k, std::string on_fail) {
   bool succeed = true;
   if (a.x != i) {
-    std::cerr << on_fail << ": x val differs " << a.x << " != " << " i " << std::endl;
+    std::cerr << on_fail << ": x val differs " << a.x << " != " <<  i  << std::endl;
     succeed = false;
   }
 
   if (a.y != j) {
-    std::cerr << on_fail << ": ... " << a.y << " != " << " j " << std::endl;
+    std::cerr << on_fail << ": y val differs " << a.y << " != " <<  j  << std::endl;
     succeed = false;
   }
 
   if (a.z != k) {
-    std::cerr << on_fail << ": ... " << a.z << " != " << " k " << std::endl;
+    std::cerr << on_fail << ": z val differs " << a.z << " != " <<  k  << std::endl;
     succeed = false;
   }
 
