@@ -1,0 +1,29 @@
+name: ci-clang-format
+
+on: [push, pull_request]
+
+jobs:
+    format-check:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+            - uses: DoozyX/clang-format-lint-action@v0.20
+              with: 
+                source: '.'
+                extensions: 'h, cpp, c'
+                clangFormatVersion: 20
+                style: file
+                # Turn this to true and use a different action to automatically make a new commit with changes.
+                # This is the same as the clang-format -i command. Will edit files directly instead of showing difference.
+                inplace: False 
+            
+            # This will automatically commit changed files when inplace = True
+        #    - uses: EndBug/add-and-commit@v9
+        #     with: 
+        #        author_name: clang-formatter
+        #        author_email: robot@example.com
+        #        message: 'Commiting clang-format changes'
+        #      env: 
+        #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                

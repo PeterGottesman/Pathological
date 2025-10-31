@@ -21,11 +21,11 @@ jobs:
       - name: Install CMake
         uses: jwlawson/actions-setup-cmake@v2
 
-      #- name: Setup VCPkg
-      #  uses: lukka/run-vcpkg@v11
-      #  with: 
-       #   vcpkgGitCommitId: '74e6536215718009aae747d86d84b78376bf9e09' # 2025.10.17
-       #   vcpkgJsonGlob: ${{ github.workspace }}/vcpkg.json
+     # - name: Setup VCPkg
+     #   uses: lukka/run-vcpkg@v11
+     #   with: 
+     #     vcpkgGitCommitId: '74e6536215718009aae747d86d84b78376bf9e09' # 2025.10.17
+     #     vcpkgJsonGlob: ${{ github.workspace }}/vcpkg.json
       
        # This is a placeholder until I get vcpkg to work with this action.
       # TODO: Make action to handle package management with VCPKG. This .yml file will depend on that one. 
