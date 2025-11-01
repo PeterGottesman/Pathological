@@ -49,7 +49,7 @@ file(COPY ${PROJECT_SOURCE_DIR}/resources DESTINATION ${PROJECT_BINARY_DIR})
 add_executable(${PROJECT_NAME} ${SOURCES_FILES})
 add_executable(vec3_test ${VEC3_SOURCES})
 add_test(NAME vec3_test COMMAND vec3_test)
-add_executable(obj_loader_test ${OBJ_LOADER_SOURCES} ${VEC3_SORUCES} ${SOURCES_FILES_NONMAIN})
+add_executable(obj_loader_test ${OBJ_LOADER_SOURCES} ${SOURCES_FILES_NONMAIN})
 add_test(NAME obj_loader_test COMMAND obj_loader_test)
 
 set (passRegex "^Test passed" "^All ok")
