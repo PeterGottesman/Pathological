@@ -15,5 +15,5 @@ jobs:
                 clangFormatVersion: 20
                 style: file
                 # This is the same as the clang-format -i command. Will edit files directly instead of showing the difference.
-                inplace: true 
+                inplace: false
                 
