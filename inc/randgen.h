@@ -17,7 +17,7 @@ public:
 
 	unsigned get_seed(void)
 	{
-		return seed;
+   return seed;
 	}
 
 	float uniform()
