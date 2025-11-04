@@ -17,6 +17,7 @@ int main(int argc, char **argv)
 {
 	// Arguments to parse
 	bool benchmark;
+
     bool help;
 	int width;
 	int height;
