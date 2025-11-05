@@ -83,16 +83,35 @@ int main(int argc, char **argv)
 		try {
 				// Load OBJ
 				ObjData obj = load_obj_file(obj_path);
-				
 
-				// Material for the mesh
+				if (!obj.V.empty()) {
+                    Vec3 mn{ 1e30f, 1e30f, 1e30f }, mx{ -1e30f,-1e30f,-1e30f };
+                    for (const auto& p : obj.V) {
+                        mn.x = std::min(mn.x, p.x); mn.y = std::min(mn.y, p.y); mn.z = std::min(mn.z, p.z);
+                        mx.x = std::max(mx.x, p.x); mx.y = std::max(mx.y, p.y); mx.z = std::max(mx.z, p.z);
+                    }
+                    const Vec3 center = (mn + mx) * 0.5f;
+                    const Vec3 size   = mx - mn;
+                    const float max_side = std::max(std::max(size.x, size.y), size.z);
+                    const float s = (max_side > 0.f) ? (1.0f / max_side) : 1.f; // fit nicely
+
+                    for (auto& p : obj.V) {
+                        p = (p - center) * s;     // center + scale
+						p.x += 1.f;
+                        p.y += 0.f;            // sit near Cornell floor
+                        p.z -= -0.5f;             // nudge slightly back
+                    }
 				
+				}
+				// Material for the mesh
+				Material *glassmat = new Dielectric(1.5);
 				Material* meshmat = new Lambertian({1.0, 1.0, 1.0}, {1.0,1.0,1.0});
 
 
 
 				// Add triangles to the scene
 				size_t added = 0;
+				//Vec3 adj(1.f, -2.f, -0.5f); // adjust position of loaded mesh
 				for (const auto& tri : obj.tris) {
 					std::array<Vec3,3> verts = {
 						obj.V[tri.v[0]],
