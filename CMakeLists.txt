@@ -36,9 +36,6 @@ set(SOURCES_FILES_NONMAIN
 
 set(VEC3_SOURCES ${PROJECT_SOURCE_DIR}/tests/vec3_test.cpp
 )
-set(OBJ_LOADER_SOURCES  ${PROJECT_SOURCE_DIR}/tests/obj_loader_test.cpp
-)
-
 
 find_package(OpenGL REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
