@@ -50,7 +50,7 @@ target_compile_options(vec3_test PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
-	GLEW
+	GLEW::GLEW
     	GL
     	glfw
 	pthread
