@@ -90,8 +90,11 @@ ObjData load_obj_stream(std::istream& istream) {
 
             ObjData::Tri T{};
             parse_face_vertex(toks[0], T.v[0], T.vn[0]);
+            std::cout << toks[0] << std::endl; 
             parse_face_vertex(toks[1], T.v[1], T.vn[1]);
+            std::cout << toks[1] << std::endl; 
             parse_face_vertex(toks[2], T.v[2], T.vn[2]);
+            std::cout << toks[2] << std::endl; 
             out.tris.push_back(T);
         }
         

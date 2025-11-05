@@ -13,7 +13,6 @@ struct ObjData {
         int vn[3];         // normal indices (0-based)
     };
     std::vector<Tri> tris; // faces (f)
-    static ObjData load_obj(const std::string& path);
 };
 
 // Load .obj with: v, vn, f (supports "f a b c" and "f a//na b//nb c//nc"

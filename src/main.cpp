@@ -8,6 +8,11 @@
 #include "util/argparse.h"
 #include "util/benchmark.h"
 #include "util/exporter.h"
+#include "util/obj_loader.h"
+#include "renderable/triangle.h"
+#include "renderable/sphere.h"
+#include "camera.h"
+#include "scene.h"
 
 const int WIDTH = 640;
 const int HEIGHT = 480;
@@ -31,6 +36,7 @@ int main(int argc, char **argv)
 	parser.add_arg("height", "Render image height", true, 'h');
 	parser.add_arg("nthreads", "Number of render threads", true, 'n');
 	parser.add_arg("samples", "Number of samples per pixel per frame", true, 's');
+	parser.add_arg("obj", "Path to Wavefront OBJ file", true, 'o');
 
 	if (parser.parse() != 0)
 	{
@@ -51,6 +57,9 @@ int main(int argc, char **argv)
 	parser.get_arg("height", height, HEIGHT);
 	parser.get_arg("nthreads", nthreads, (int)std::thread::hardware_concurrency());
 	parser.get_arg("samples", spp, SPP);
+	parser.get_arg("obj", obj_path, std::string(""));
+
+	
 
 	if (benchmark)
 	{
@@ -63,6 +72,69 @@ int main(int argc, char **argv)
 	Window win(width, height, "Pathological path tracer");
 
 	Pathological app(width, height, spp, nthreads);
+	Scene& sc = app.get_scene();
+	Camera& cam = app.get_camera();
+
+	// load Cornell box
+	app.load_default_scene(sc, cam);
+
+	// if obj is provided, remove spheres and insert mesh
+	if (!obj_path.empty()) {
+		try {
+				// Load OBJ
+				ObjData obj = load_obj_file(obj_path);
+
+				if (!obj.V.empty()) {
+                    Vec3 mn{ 1e30f, 1e30f, 1e30f }, mx{ -1e30f,-1e30f,-1e30f };
+                    for (const auto& p : obj.V) {
+                        mn.x = std::min(mn.x, p.x); mn.y = std::min(mn.y, p.y); mn.z = std::min(mn.z, p.z);
+                        mx.x = std::max(mx.x, p.x); mx.y = std::max(mx.y, p.y); mx.z = std::max(mx.z, p.z);
+                    }
+                    const Vec3 center = (mn + mx) * 0.5f;
+                    const Vec3 size   = mx - mn;
+                    const float max_side = std::max(std::max(size.x, size.y), size.z);
+                    const float s = (max_side > 0.f) ? (1.0f / max_side) : 1.f; // fit nicely
+
+                    for (auto& p : obj.V) {
+                        p = (p - center) * s;     // center + scale
+						p.x += 1.f;
+                        p.y += 0.f;            // sit near Cornell floor
+                        p.z -= -0.5f;             // nudge slightly back
+                    }
+				
+				}
+				// Material for the mesh
+				Material *glassmat = new Dielectric(1.5);
+				Material* meshmat = new Lambertian({1.0, 1.0, 1.0}, {1.0,1.0,1.0});
+
+
+
+				// Add triangles to the scene
+				size_t added = 0;
+				//Vec3 adj(1.f, -2.f, -0.5f); // adjust position of loaded mesh
+				for (const auto& tri : obj.tris) {
+					std::array<Vec3,3> verts = {
+						obj.V[tri.v[0]],
+						obj.V[tri.v[1]],
+						obj.V[tri.v[2]]
+					};
+
+					std::array<Vec3,3> norms = { Vec3{0,0,0}, Vec3{0,0,0}, Vec3{0,0,0} };
+					if (tri.vn[0] >= 0 && tri.vn[1] >= 0 && tri.vn[2] >= 0) {
+						norms = { obj.VN[tri.vn[0]], obj.VN[tri.vn[1]], obj.VN[tri.vn[2]] };
+					}
+
+					sc.add_renderable(new Triangle(verts, norms, meshmat));
+					++added;
+				}
+
+				std::printf("Added %zu triangles to Scene\n", added);
+			}catch (const std::exception& e) {
+				std::fprintf(stderr, "Error loading OBJ: %s\n", e.what());
+				return 1;
+			}
+		
+	}
 	void *pixels = app.get_texture();
 	NetPBM exp("traced.ppm", width, height, (Color *)pixels);
 
