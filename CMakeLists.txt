@@ -46,40 +46,24 @@ find_package(GLEW REQUIRED)
 
 file(COPY ${PROJECT_SOURCE_DIR}/resources DESTINATION ${PROJECT_BINARY_DIR})
 
+link_libraries(GLEW::GLEW GL glfw pthread)
+
+add_compile_options(-ggdb -Ofast -Wall -march=native)
+
 add_executable(${PROJECT_NAME} ${SOURCES_FILES})
 add_executable(vec3_test ${VEC3_SOURCES})
 add_test(NAME vec3_test COMMAND vec3_test)
-add_executable(obj_loader_test ${OBJ_LOADER_SOURCES} ${SOURCES_FILES_NONMAIN})
-add_test(NAME obj_loader_test COMMAND obj_loader_test)
 
 set (passRegex "^Test passed" "^All ok")
 set (failRegex "Error" "Fail")
 
+function(create_executable TEST_NAME TEST_CPP)
+	set(NEW_SOURCES ${TEST_CPP})
+	add_executable(${TEST_NAME} ${NEW_SOURCES} ${SOURCES_FILES_NONMAIN})
+	add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
+	return()
+endfunction()
+
+create_executable(${TEST_NAME} ${TEST_CPP})
+
 include_directories(BEFORE inc)
-
-target_compile_options(${PROJECT_NAME} PRIVATE
-    -ggdb         
-    -Ofast        
-    -Wall         
-    -march=native
-)
-target_compile_options(vec3_test PRIVATE
-    -ggdb
-    -Ofast
-    -Wall
-    -march=native
-)
-
-target_link_libraries(${PROJECT_NAME} PUBLIC
-	GLEW::GLEW
-    	GL
-    	glfw
-	pthread
-)
-target_link_libraries(obj_loader_test PUBLIC
-        GLEW::GLEW
-        GL
-        glfw
-        pthread
-)
-
