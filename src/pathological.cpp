@@ -5,24 +5,24 @@
 void Pathological::generate_initial_regions(void)
 {
 	// TODO: divide regions into squares according
-	unsigned reg_height = floor((float)tex_height/nthreads);
+    unsigned reg_height = tex_height/nthreads;
+    unsigned excess_height = tex_height%nthreads;
 	unsigned reg_start = 0;
-	for (unsigned i = 0; i < nthreads-1; ++i)
+	for (unsigned i = 0; i < nthreads; ++i)
 	{
+        unsigned this_height = reg_height;
+        if (excess_height > 0) {
+          this_height += 1;
+          excess_height -= 1;
+        }
+
 		regions.push_back(
 			RenderRegion(tex_width, tex_height, // full texture dimensions
-						 tex_width, reg_height, // region dimensions
+						 tex_width, this_height, // region dimensions
 						 reg_start, 0)			// region offset (r, c)
 			);
-		reg_start += reg_height;
+		reg_start += this_height;
 	}
-
-	// Last region is larger if need be
-	regions.push_back(
-		RenderRegion(tex_width, tex_height,
-					 tex_width, tex_height-reg_start,
-					 reg_start, 0)
-		);
 }
 
 void Pathological::schedule(void)
