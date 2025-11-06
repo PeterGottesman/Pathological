@@ -108,7 +108,6 @@ int main(int argc, char **argv)
 				Material* meshmat = new Lambertian({1.0, 1.0, 1.0}, {1.0,1.0,1.0});
 
 
-
 				// Add triangles to the scene
 				size_t added = 0;
 				//Vec3 adj(1.f, -2.f, -0.5f); // adjust position of loaded mesh
@@ -124,7 +123,7 @@ int main(int argc, char **argv)
 						norms = { obj.VN[tri.vn[0]], obj.VN[tri.vn[1]], obj.VN[tri.vn[2]] };
 					}
 
-					sc.add_renderable(new Triangle(verts, norms, meshmat));
+					sc.add_renderable(new Triangle(verts, norms, glassmat));
 					++added;
 				}
 
