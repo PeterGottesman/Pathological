@@ -7,7 +7,7 @@ bool Scene::any_hit(const Ray &r, Hit &h) const
 {
 	for (auto &rend : renderables)
 	{
-		if(rend->intersect(r, h))
+		if(rend->intersect(r, h) && h.dist <= r.max_dist)
 		{
 			h.hit_pos = r.origin + r.direction * h.dist;
 			h.norm = rend->get_normal(h.hit_pos);

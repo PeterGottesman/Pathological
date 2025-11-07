@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <cassert>
 #include <iostream>
 
 #include "vec3.h"
@@ -54,4 +55,9 @@ public:
 	{
 			return (pt - center)/radius;
 	}
+
+    Vec3 uniform_random_point(RandGen& rng) override {
+      std::cerr << "random point sampling operation unsupported for spheres at the moment" << std::endl;
+      return center;
+    }
 };
