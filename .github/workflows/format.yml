@@ -11,7 +11,7 @@ jobs:
             - uses: DoozyX/clang-format-lint-action@v0.20
               with: 
                 source: '.'
-                extensions: 'h, cpp, c'
+                extensions: 'h,cpp'
                 clangFormatVersion: 20
                 style: file
                 # This is the same as the clang-format -i command. Will edit files directly instead of showing the difference.
