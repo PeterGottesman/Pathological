@@ -3,7 +3,7 @@
 
 float schlick(float cos_itheta, float ior1, float ior2)
 {
-	float r0 = (ior1-ior2)/(ior1+ior2);
+	float r0 = (ior1 - ior2) / (ior1 + ior2);
 	r0 *= r0;
 
 	float ci = 1 - cos_itheta;
@@ -12,7 +12,7 @@ float schlick(float cos_itheta, float ior1, float ior2)
 	// Clamp to [0, 1]. Round values which will result in an
 	// infinitesimally small probability (i.e. sch < eps or sch >
 	// 1-eps), to the boundary
-	sch = sch <= (1.0f-0.001f) ? sch : 1.0f;
+	sch = sch <= (1.0f - 0.001f) ? sch : 1.0f;
 	sch = sch >= 0.001f ? sch : 0.0f;
 
 	return sch;
@@ -20,9 +20,9 @@ float schlick(float cos_itheta, float ior1, float ior2)
 
 // Refraction, derivation shown in
 // https://graphics.stanford.edu/courses/cs148-10-summer/docs/2006--degreve--reflection_refraction.pdf
-bool refract(Vec3 &wo, float cos_itheta, const Vec3 &norm, const Vec3 &dir, float ior1, float ior2)
+bool refract(Vec3& wo, float cos_itheta, const Vec3& norm, const Vec3& dir, float ior1, float ior2)
 {
-	float ror = ior1/ior2;
+	float ror = ior1 / ior2;
 
 	// Refracted sin theta squared
 	float sin2_rtheta = ror * ror * (1 - cos_itheta * cos_itheta);
@@ -31,12 +31,11 @@ bool refract(Vec3 &wo, float cos_itheta, const Vec3 &norm, const Vec3 &dir, floa
 	if (sin2_rtheta > 1.0f)
 		return false;
 
-	wo = ror * dir - norm * (ror * cos_itheta + sqrt(1-sin2_rtheta));
+	wo = ror * dir - norm * (ror * cos_itheta + sqrt(1 - sin2_rtheta));
 	return true;
 }
 
-Color Dielectric::sample(const Scene &sc, Hit &hit,
-						 const Ray &r, RandGen &rng) const
+Color Dielectric::sample(const Scene& sc, Hit& hit, const Ray& r, RandGen& rng) const
 {
 	if (r.depth == r.max_depth)
 		return sc.get_background({0.0});
@@ -85,8 +84,8 @@ Color Dielectric::sample(const Scene &sc, Hit &hit,
 		prob = 1.0f;
 	}
 
-	Ray ro(hit.hit_pos, wo, r.depth+1);
-	if(sc.nearest_hit(ro, hit))
+	Ray ro(hit.hit_pos, wo, r.depth + 1);
+	if (sc.nearest_hit(ro, hit))
 		return hit.mat->sample(sc, hit, ro, rng);
 
 	return sc.get_background(wo);

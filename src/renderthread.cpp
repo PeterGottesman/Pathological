@@ -23,31 +23,30 @@ void RenderThread::render_region(void)
 	std::vector<Vec3> offsets;
 	for (unsigned i = 0; i < spp; ++i)
 	{
-		offsets.push_back({rand.uniform_range(0, 1.0),
-						rand.uniform_range(0, 1.0),
-						0.0});
+		offsets.push_back({rand.uniform_range(0, 1.0), rand.uniform_range(0, 1.0), 0.0});
 	}
 
 	for (unsigned y = row_start; y < row_end; ++y)
 	{
 		for (unsigned x = col_start; x < col_end; ++x)
 		{
-			int idx = y*region.im_width + x;
+			int idx = y * region.im_width + x;
 			Color col(0.0);
 			for (unsigned s = 0; s < spp; ++s)
 			{
-				if (!running) return;
+				if (!running)
+					return;
 
 				col += calc_pixel(x, y, offsets[s]);
 			}
 
-			image[idx] += ((col/spp) - image[idx])/(iters[idx]+1);
+			image[idx] += ((col / spp) - image[idx]) / (iters[idx] + 1);
 			iters[idx]++;
 		}
 	}
 }
 
-Color RenderThread::calc_pixel(unsigned x, unsigned y, const Vec3 &offset)
+Color RenderThread::calc_pixel(unsigned x, unsigned y, const Vec3& offset)
 {
 	cam->get_pixel_ray(r, x, y, offset);
 	return cam->cast_ray(r, rand);

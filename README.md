@@ -56,6 +56,13 @@ from the directory that cmake was built in and after running make there will be
 a `./pathological`. You can run the tests the cmake creates by running `ctest`
 in the build directory.
 
+## Resolving formatting issues
+To resolve formatting issues, make sure to have clang-format installed using 
+`sudo apt install clang-format` then make sure to cd into the project directory 
+and run the command `clang-format -i -style=file <file.h> <file.cpp>` to resolve 
+issues with certain files or run the following command to format all files in directory:
+`find . -iname '*.h' -o -iname '*.cpp' | xargs clang-format -i -style=file`
+
 ## Benchmarking
 Currently the benchmarks are nothing special, I have just been using
 it to check if there are major performance regressions. To run this

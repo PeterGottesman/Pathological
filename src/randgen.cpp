@@ -1,15 +1,14 @@
 #include "randgen.h"
 
-Vec3 RandGen::sample_hemisphere_uniform(const Vec3 &norm, RandGen &rg)
+Vec3 RandGen::sample_hemisphere_uniform(const Vec3& norm, RandGen& rg)
 {
 	// Unit vector that isn't collinear with norm, use to create basis
-	Vec3 not_norm = std::abs(norm.x) > 0.9
-		? Vec3(0.0, 1.0, 0.0) : Vec3(1.0, 0.0, 0.0);
+	Vec3 not_norm = std::abs(norm.x) > 0.9 ? Vec3(0.0, 1.0, 0.0) : Vec3(1.0, 0.0, 0.0);
 
 	// Coordinate system around norm
 	Vec3 y_axis = Vec3::normalize(Vec3::cross(norm, not_norm));
 	Vec3 x_axis = Vec3::cross(y_axis, norm);
-	
+
 	// To get a random point on a sphere, generating a random value of
 	// theta and phi is not valid, this would result in many points at
 	// the poles.
@@ -21,26 +20,16 @@ Vec3 RandGen::sample_hemisphere_uniform(const Vec3 &norm, RandGen &rg)
 
 	// Shortcut spherical to cartesian using sin(acos(x)) = sqrt(1 - x*x)
 	float sin_phi = std::sqrt(std::max(0.0, 1.0 - cos_phi * cos_phi));
-	Vec3 cart = {
-		sin_phi * std::cos(theta),
-		sin_phi * std::sin(theta),
-		cos_phi
-	};
-	return cart.x * x_axis +
-		cart.y * y_axis +
-		cart.z * norm;
+	Vec3 cart = {sin_phi * std::cos(theta), sin_phi * std::sin(theta), cos_phi};
+	return cart.x * x_axis + cart.y * y_axis + cart.z * norm;
 }
 
-Vec3 RandGen::sample_sphere_uniform(RandGen &rg)
+Vec3 RandGen::sample_sphere_uniform(RandGen& rg)
 {
-    float theta = 2 * M_PI * rg.uniform();
+	float theta = 2 * M_PI * rg.uniform();
 	float cos_phi = 2.0 * rg.uniform() - 1.0; // phi ranges over full sphere
 
 	float sin_phi = std::sqrt(std::max(0.0, 1.0 - cos_phi * cos_phi));
-	Vec3 cart = {
-		sin_phi * std::cos(theta),
-		sin_phi * std::sin(theta),
-		cos_phi
-	};
+	Vec3 cart = {sin_phi * std::cos(theta), sin_phi * std::sin(theta), cos_phi};
 	return cart;
 }
