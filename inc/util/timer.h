@@ -6,7 +6,7 @@ class Timer
 {
 	std::chrono::high_resolution_clock::time_point begin, end;
 
-public:
+  public:
 	void start(void)
 	{
 		end = begin = std::chrono::high_resolution_clock::now();
@@ -19,11 +19,11 @@ public:
 
 	float get_ms(void)
 	{
-		return std::chrono::duration<float, std::milli>(end-begin).count();
+		return std::chrono::duration<float, std::milli>(end - begin).count();
 	}
 
 	float get_cnt_per_ms(int count)
 	{
-		return count/std::chrono::duration<float, std::milli>(end-begin).count();
+		return count / std::chrono::duration<float, std::milli>(end - begin).count();
 	}
 };

@@ -1,34 +1,38 @@
 #include "util/obj_loader.h"
+#include <cctype>
 #include <fstream>
+#include <iostream>
 #include <sstream>
 #include <stdexcept>
-#include <cctype>
-#include <iostream>
 using namespace std;
 
 bool test_success = true;
 
-//CheckVec3Expected from vec3_test.cpp
+// CheckVec3Expected from vec3_test.cpp
 
-bool CheckVec3Expected(Vec3 a, float i, float j, float k, std::string on_fail) {
-  bool succeed = true;
-  if (a.x != i) {
-    std::cerr << on_fail << ": x val differs " << a.x << " != " <<  i  << std::endl;
-    succeed = false;
-  }
+bool CheckVec3Expected(Vec3 a, float i, float j, float k, std::string on_fail)
+{
+	bool succeed = true;
+	if (a.x != i)
+	{
+		std::cerr << on_fail << ": x val differs " << a.x << " != " << i << std::endl;
+		succeed = false;
+	}
 
-  if (a.y != j) {
-    std::cerr << on_fail << ": y val differs " << a.y << " != " <<  j  << std::endl;
-    succeed = false;
-  }
+	if (a.y != j)
+	{
+		std::cerr << on_fail << ": y val differs " << a.y << " != " << j << std::endl;
+		succeed = false;
+	}
 
-  if (a.z != k) {
-    std::cerr << on_fail << ": z val differs " << a.z << " != " <<  k  << std::endl;
-    succeed = false;
-  }
+	if (a.z != k)
+	{
+		std::cerr << on_fail << ": z val differs " << a.z << " != " << k << std::endl;
+		succeed = false;
+	}
 
-  test_success = succeed && test_success;
-  return succeed;
+	test_success = succeed && test_success;
+	return succeed;
 }
 
 bool test(){
@@ -86,15 +90,16 @@ bool test(){
 
 }
 
-
-
-int main(){
-    test_success = test() && test_success;
-    if (test_success){
-        std::cerr << "Success!" << std::endl;
-        return 0;
-    }
-    else{
-        return 1;
-    }
-} 
+int main()
+{
+	test_success = test() && test_success;
+	if (test_success)
+	{
+		std::cerr << "Success!" << std::endl;
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
+}
