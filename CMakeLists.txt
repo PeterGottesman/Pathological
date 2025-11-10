@@ -36,9 +36,6 @@ set(SOURCES_FILES_NONMAIN
                   ${PROJECT_SOURCE_DIR}/src/material/mirror.cpp
                   ${PROJECT_SOURCE_DIR}/src/material/lambertian.cpp
 )
-set(OBJ_LOADER_SOURCES  ${PROJECT_SOURCE_DIR}/tests/obj_loader_test.cpp
-)
-
 
 find_package(OpenGL REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
