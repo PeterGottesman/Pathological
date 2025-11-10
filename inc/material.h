@@ -13,6 +13,7 @@ public:
 
 	virtual Color sample(const Scene &sc, Hit &hit,
 						 const Ray &r, RandGen &rng) const = 0;
+    virtual bool is_emissive() const = 0;
 };
 
 class DebugNormMaterial : public Material
@@ -24,6 +25,10 @@ public:
 						 const Ray &r, RandGen &rng) const override {
       return hit.norm;
     }
+
+  bool is_emissive() const override {
+    return true;
+  }
 };
 
 class Lambertian: public Material
@@ -35,8 +40,18 @@ public:
 	Lambertian(const Color& kd, const Color& ke)
 		: kd(kd), ke(ke) {}
 
+	Color sample_brdf(const Scene &sc, Hit &hit,
+                      const Ray &r, RandGen &rng) const;
+
+	Color sample_light(const Scene &sc, const Ray &r,
+                       const Vec3 &orig, RandGen &rng) const;
+
 	Color sample(const Scene &sc, Hit &hit,
 				 const Ray &r, RandGen &rng) const override;
+
+  bool is_emissive() const override {
+    return ke.r != 0.f || ke.g != 0.f || ke.b != 0.f;
+  }
 };
 
 class Mirror: public Material
@@ -46,6 +61,10 @@ public:
 
 	Color sample(const Scene &sc, Hit &hit,
 				 const Ray &r, RandGen &rng) const override;
+
+  bool is_emissive() const override {
+    return false;
+  }
 };
 
 class Dielectric: public Material
@@ -57,4 +76,8 @@ public:
 
 	Color sample(const Scene &sc, Hit &hit,
 				 const Ray &r, RandGen &rng) const override;
+
+  bool is_emissive() const override {
+    return false;
+  }
 };

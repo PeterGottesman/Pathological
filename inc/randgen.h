@@ -31,6 +31,12 @@ public:
 		return dist(engine);
 	}
 
+	int uniform_range_int(int min, int max)
+	{
+		std::uniform_int_distribution<int > dist(min, max);
+		return dist(engine);
+	}
+
 	// Create a new RandGen from std::random_device. Returns RandGen,
 	// and sets seed to the generated seed.  This should only be used
 	// to create the initial randgen. The generated seed should be
@@ -57,4 +63,5 @@ public:
 	}
 
 	static Vec3 sample_hemisphere_uniform(const Vec3 &norm, RandGen &rg);
+	static Vec3 sample_sphere_uniform(RandGen &rg);
 };
