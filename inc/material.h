@@ -50,7 +50,7 @@ public:
 				 const Ray &r, RandGen &rng) const override;
 
   bool is_emissive() const override {
-    return ke.r != 0.f && ke.g != 0.f && ke.b != 0.f;
+    return ke.r != 0.f || ke.g != 0.f || ke.b != 0.f;
   }
 };
 
