@@ -63,4 +63,5 @@ public:
 	}
 
 	static Vec3 sample_hemisphere_uniform(const Vec3 &norm, RandGen &rg);
+	static Vec3 sample_sphere_uniform(RandGen &rg);
 };

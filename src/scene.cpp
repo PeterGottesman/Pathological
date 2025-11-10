@@ -27,7 +27,7 @@ bool Scene::nearest_hit(const Ray &r, Hit &h) const
 	bool didhit = false;
 	for (auto &rend : renderables)
 	{
-		if(rend->intersect(r, tmp_hit) && tmp_hit.dist < min_d)
+        if(rend->intersect(r, tmp_hit))
 		{
 			if (tmp_hit.dist > min_d || tmp_hit.dist < 1e-3) continue;
 			min_d = tmp_hit.dist;

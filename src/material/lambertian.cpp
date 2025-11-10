@@ -26,7 +26,7 @@ Color Lambertian::sample_light(const Scene &sc,
     Ray light_ray(orig, diff/mag);
     light_ray.max_depth = 0;
 
-    if (sc.nearest_hit(light_ray, light_hit) && Vec3::magnitude(light_hit.hit_pos - light_pt) < 1e-3) {
+    if (sc.nearest_hit(light_ray, light_hit) && light_hit.mat->is_emissive()) {
       // This is probably all wrong
       Color light_in = light_hit.mat->sample(sc, light_hit, light_ray, rng);
       float cos_theta = Vec3::dot(light_hit.norm, Vec3{0}-light_ray.direction);

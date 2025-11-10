@@ -57,7 +57,6 @@ public:
 	}
 
     Vec3 uniform_random_point(RandGen& rng) override {
-      std::cerr << "random point sampling operation unsupported for spheres at the moment" << std::endl;
-      return center;
+      return center + radius * RandGen::sample_sphere_uniform(rng);
     }
 };
