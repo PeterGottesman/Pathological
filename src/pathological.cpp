@@ -5,24 +5,19 @@
 void Pathological::generate_initial_regions(void)
 {
 	// TODO: divide regions into squares according
-	unsigned reg_height = floor((float)tex_height/nthreads);
+	unsigned reg_height = floor((float)tex_height / nthreads);
 	unsigned reg_start = 0;
-	for (unsigned i = 0; i < nthreads-1; ++i)
+	for (unsigned i = 0; i < nthreads - 1; ++i)
 	{
-		regions.push_back(
-			RenderRegion(tex_width, tex_height, // full texture dimensions
-						 tex_width, reg_height, // region dimensions
-						 reg_start, 0)			// region offset (r, c)
-			);
+		regions.push_back(RenderRegion(tex_width, tex_height, // full texture dimensions
+		                               tex_width, reg_height, // region dimensions
+		                               reg_start, 0)          // region offset (r, c)
+		);
 		reg_start += reg_height;
 	}
 
 	// Last region is larger if need be
-	regions.push_back(
-		RenderRegion(tex_width, tex_height,
-					 tex_width, tex_height-reg_start,
-					 reg_start, 0)
-		);
+	regions.push_back(RenderRegion(tex_width, tex_height, tex_width, tex_height - reg_start, reg_start, 0));
 }
 
 void Pathological::schedule(void)
@@ -51,18 +46,18 @@ void Pathological::launch_threads(void)
 	unsigned seed;
 	for (unsigned i = 0; i < nthreads; ++i)
 	{
-		
+
 		threads.push_back({&cam, regions[i], rand.randgen_seeded_generator(seed)});
 		threads.back().launch();
 	}
 }
 
-void Pathological::add_exporter(Exporter *exp)
+void Pathological::add_exporter(Exporter* exp)
 {
 	exporter = exp;
 }
 
-bool Pathological::load_default_scene(Scene &sc, Camera &cam)
+bool Pathological::load_default_scene(Scene& sc, Camera& cam)
 {
 	// TODO: Make these Color::red, etc
 	Color red(1.0, 0.0, 0.0);
@@ -74,12 +69,12 @@ bool Pathological::load_default_scene(Scene &sc, Camera &cam)
 
 	// TODO: Transfer material and renderable ownership to scene
 	// instance, destroy them in scene destructor
-	Material *light = new Lambertian({0.3}, white*30);
-	Material *redmat = new Lambertian(red, {});
-	Material *whitemat= new Lambertian(white, {});
-	Material *greenmat = new Lambertian(green, {});
-	Material *mirrormat = new Mirror();
-    Material *glassmat = new Dielectric(1.5);
+	Material* light = new Lambertian({0.3}, white * 30);
+	Material* redmat = new Lambertian(red, {});
+	Material* whitemat = new Lambertian(white, {});
+	Material* greenmat = new Lambertian(green, {});
+	Material* mirrormat = new Mirror();
+	Material* glassmat = new Dielectric(1.5);
 
 	Vec3 l_fru{0.5f, 2.99f, -0.25f};
 	Vec3 l_flu{-0.5f, 2.99f, -0.25f};
@@ -146,11 +141,7 @@ bool Pathological::load_default_scene(Scene &sc, Camera &cam)
 	sc.add_renderable(new Triangle(light1, {0.0}, light));
 	sc.add_renderable(new Triangle(light2, {0.0}, light));
 
-	sc.add_renderable(new Sphere(
-						  Vec3{1.3f, -2.2f, -0.5f},
-						  0.5f,
-						  glassmat
-						  ));
+	sc.add_renderable(new Sphere(Vec3{1.3f, -2.2f, -0.5f}, 0.5f, glassmat));
 
 	// sc.add_renderable(new Sphere(
 	// 					  Vec3{1.3f, -2.0f, -1.4f},
@@ -158,11 +149,7 @@ bool Pathological::load_default_scene(Scene &sc, Camera &cam)
 	// 					  greenmat
 	// 					  ));
 
-	sc.add_renderable(new Sphere(
-						  Vec3{-1.4f, -2.4f, -1.2f},
-						  0.5f,
-						  mirrormat
-						  ));
+	sc.add_renderable(new Sphere(Vec3{-1.4f, -2.4f, -1.2f}, 0.5f, mirrormat));
 
 	// sc.add_renderable(new Sphere(
 	// 					  Vec3{-0.8f, -2.7f, -1.7f},

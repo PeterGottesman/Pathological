@@ -2,12 +2,9 @@
 
 #include <cstdio>
 
-int ArgParse::add_arg(const std::string &long_arg, const std::string &help,
-					   bool requires_param, char short_arg)
+int ArgParse::add_arg(const std::string& long_arg, const std::string& help, bool requires_param, char short_arg)
 {
-	bool success = args.insert({
-			long_arg, Argument{long_arg, help, requires_param, short_arg}
-		}).second;
+	bool success = args.insert({long_arg, Argument{long_arg, help, requires_param, short_arg}}).second;
 
 	if (short_arg != 0)
 		success &= short_args.insert({short_arg, long_arg}).second;
@@ -16,8 +13,7 @@ int ArgParse::add_arg(const std::string &long_arg, const std::string &help,
 }
 
 template <class T>
-int ArgParse::interpret_arg(std::string long_arg, T &value,
-							std::string type_name, int (*f)(std::string, T &))
+int ArgParse::interpret_arg(std::string long_arg, T& value, std::string type_name, int (*f)(std::string, T&))
 {
 
 	auto arg = args.find(long_arg);
@@ -33,9 +29,11 @@ int ArgParse::interpret_arg(std::string long_arg, T &value,
 	try
 	{
 		err = f(literal_value, value);
-	} catch (const std::exception &e) {
-		fprintf(stderr, "Caught error interpreting argument %s as %s: %s\n",
-			   long_arg.c_str(), type_name.c_str(), e.what());
+	}
+	catch (const std::exception& e)
+	{
+		fprintf(stderr, "Caught error interpreting argument %s as %s: %s\n", long_arg.c_str(), type_name.c_str(),
+		        e.what());
 		fprintf(stderr, "Value was: %s\n", literal_value.c_str());
 		err = -1;
 	}
@@ -43,66 +41,71 @@ int ArgParse::interpret_arg(std::string long_arg, T &value,
 	return err;
 }
 
-template<> int ArgParse::get_arg(std::string long_arg, bool &value)
+template <>
+int ArgParse::get_arg(std::string long_arg, bool& value)
 {
 	return interpret_arg<bool>(long_arg, value, "bool",
-							  [](std::string literal, bool &value) -> int {
-                                fprintf(stderr, "parsing bool: '%s'\n", literal.c_str());
-                                if (literal == "true" || literal == "")
-                                {
-									  value = true;
-                                }
-                                else if (literal == "false")
-                                {
-									  value = false;
-                                }
-                                else
-                                {
-                                  return -1;
-                                }
+	                           [](std::string literal, bool& value) -> int
+	                           {
+		                           fprintf(stderr, "parsing bool: '%s'\n", literal.c_str());
+		                           if (literal == "true" || literal == "")
+		                           {
+			                           value = true;
+		                           }
+		                           else if (literal == "false")
+		                           {
+			                           value = false;
+		                           }
+		                           else
+		                           {
+			                           return -1;
+		                           }
 
-								  return 0;
-							  }
-		);
+		                           return 0;
+	                           });
 }
 
-template<> int ArgParse::get_arg(std::string long_arg, int &value)
+template <>
+int ArgParse::get_arg(std::string long_arg, int& value)
 {
 	return interpret_arg<int>(long_arg, value, "int",
-							  [](std::string literal, int &value) -> int {
-								  value = std::stoi(literal);
-								  return 0;
-							  }
-		);
+	                          [](std::string literal, int& value) -> int
+	                          {
+		                          value = std::stoi(literal);
+		                          return 0;
+	                          });
 }
 
-template<> int ArgParse::get_arg(std::string long_arg, std::string &value)
+template <>
+int ArgParse::get_arg(std::string long_arg, std::string& value)
 {
 	return interpret_arg<std::string>(long_arg, value, "string",
-									  [](std::string literal, std::string &value) -> int {
-										  value = literal;
-										  return 0;
-									  }
-		);
+	                                  [](std::string literal, std::string& value) -> int
+	                                  {
+		                                  value = literal;
+		                                  return 0;
+	                                  });
 }
 
 void ArgParse::print_help()
 {
-  fprintf(stderr, "Usage: %s [options]\nOptions:\n", argv[0]);
-  for (auto& [_, argument] : args) {
-    if (argument.has_short_arg) {
-      fprintf(stderr, "-%c, ", argument.short_arg);
-    }
+	fprintf(stderr, "Usage: %s [options]\nOptions:\n", argv[0]);
+	for (auto& [_, argument] : args)
+	{
+		if (argument.has_short_arg)
+		{
+			fprintf(stderr, "-%c, ", argument.short_arg);
+		}
 
-    fprintf(stderr, "--%s", argument.long_arg.c_str());
+		fprintf(stderr, "--%s", argument.long_arg.c_str());
 
-    if (argument.requires_param) {
-      fprintf(stderr, "=<param>");
-    }
+		if (argument.requires_param)
+		{
+			fprintf(stderr, "=<param>");
+		}
 
-    fprintf(stderr, "\t\t\t%s\n", argument.help.c_str());
-
-  }
+		fprintf(stderr, "\t\t\t%s\n", argument.help.c_str());
+	}
 }
 
 int ArgParse::parse()
@@ -110,7 +113,7 @@ int ArgParse::parse()
 	// a valid argument may be one of:
 	// "-<char>", "--<str>", "-<char>=value"--<str>=value"
 
-	char *cur;
+	char* cur;
 	int err = 0;
 	int argv_idx = 1;
 
@@ -134,10 +137,10 @@ int ArgParse::parse()
 			unsigned sep_idx = str.find('=');
 
 			// Check that there is an equal sign and at least one character after it
-			has_param = sep_idx < (str.length()-1);
+			has_param = sep_idx < (str.length() - 1);
 
 			arg = str.substr(0, sep_idx);
-			val = str.substr(sep_idx+1);
+			val = str.substr(sep_idx + 1);
 		}
 		else
 		{
@@ -169,16 +172,14 @@ int ArgParse::parse()
 			break;
 		}
 
-		Argument &a = entry->second;
+		Argument& a = entry->second;
 		if (a.requires_param && !has_param)
 		{
 			// Required parameter missing
 			if (a.has_short_arg)
-				fprintf(stderr, "Argument --%s (-%c) missing required parameter\n",
-						a.long_arg.c_str(), a.short_arg);
+				fprintf(stderr, "Argument --%s (-%c) missing required parameter\n", a.long_arg.c_str(), a.short_arg);
 			else
-				fprintf(stderr, "Argument --%s missing required parameter\n",
-						a.long_arg.c_str());
+				fprintf(stderr, "Argument --%s missing required parameter\n", a.long_arg.c_str());
 			err = -1;
 			break;
 		}
