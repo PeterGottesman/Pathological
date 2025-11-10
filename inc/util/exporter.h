@@ -6,14 +6,15 @@
 
 class Exporter
 {
-protected:
+  protected:
 	unsigned width, height;
-	Color *image;
+	Color* image;
 
-	Exporter(unsigned width, unsigned height, Color *buf)
-		: width(width), height(height), image(buf) {}
+	Exporter(unsigned width, unsigned height, Color* buf) : width(width), height(height), image(buf)
+	{
+	}
 
-public:
+  public:
 	virtual bool export_image(void) const = 0;
 	virtual ~Exporter() {};
 };
@@ -24,11 +25,11 @@ class NetPBM : public Exporter
 	std::string filename;
 	unsigned range;
 
-public:
-	NetPBM(std::string filename, unsigned width, unsigned height,
-		   Color *buf, unsigned range = 255)
-		: Exporter(width, height, buf),
-		  filename(filename), range(range) {}
+  public:
+	NetPBM(std::string filename, unsigned width, unsigned height, Color* buf, unsigned range = 255)
+	    : Exporter(width, height, buf), filename(filename), range(range)
+	{
+	}
 
 	bool export_image(void) const override;
 

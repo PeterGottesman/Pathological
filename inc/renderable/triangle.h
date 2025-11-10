@@ -3,9 +3,9 @@
 #include <array>
 #include <iostream>
 
-#include "vec3.h"
 #include "ray.h"
 #include "renderable.h"
+#include "vec3.h"
 
 class Triangle : public Renderable
 {
@@ -19,12 +19,9 @@ class Triangle : public Renderable
 	/* Triangle face normal and unnormalized version*/
 	Vec3 norm, cross_edges;
 
-public:
-
-	Triangle(const std::array<Vec3, 3> &verts = {},
-			 const std::array<Vec3, 3> &norms = {},
-			 const Material *mat = {})
-		: Renderable(mat), v(verts), n(norms)
+  public:
+	Triangle(const std::array<Vec3, 3>& verts = {}, const std::array<Vec3, 3>& norms = {}, const Material* mat = {})
+	    : Renderable(mat), v(verts), n(norms)
 	{
 		e[0] = v[1] - v[0];
 		e[1] = v[0] - v[2];
@@ -32,9 +29,9 @@ public:
 		norm = Vec3::normalize(cross_edges);
 	}
 
-	bool intersect(const Ray &r, Hit &h) override
+	bool intersect(const Ray& r, Hit& h) override
 	{
-		Vec3 e2 = (1.0f/Vec3::dot(cross_edges, r.direction)) * (v[0] - r.origin);
+		Vec3 e2 = (1.0f / Vec3::dot(cross_edges, r.direction)) * (v[0] - r.origin);
 		Vec3 i = Vec3::cross(r.direction, e2);
 
 		float beta = Vec3::dot(i, e[1]);
@@ -43,10 +40,10 @@ public:
 
 		h.mat = mat;
 		h.dist = dist;
-		return (dist > 0) & (beta >= 0) & (gamma >= 0) & (beta+gamma<=1);
+		return (dist > 0) & (beta >= 0) & (gamma >= 0) & (beta + gamma <= 1);
 	}
 
-	Vec3 get_normal(const Vec3 &pt) override
+	Vec3 get_normal(const Vec3& pt) override
 	{
 		return norm;
 	}

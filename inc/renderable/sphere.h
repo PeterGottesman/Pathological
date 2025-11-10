@@ -3,21 +3,21 @@
 #include <array>
 #include <iostream>
 
-#include "vec3.h"
 #include "ray.h"
 #include "renderable.h"
+#include "vec3.h"
 
 struct Sphere : public Renderable
 {
 	Vec3 center;
 	float radius;
 
-public:
+  public:
+	Sphere(const Vec3& center, const float& rad, const Material* mat) : Renderable(mat), center(center), radius(rad)
+	{
+	}
 
-	Sphere(const Vec3 &center, const float &rad, const Material *mat)
-		: Renderable(mat), center(center), radius(rad) {}
-
-	bool intersect(const Ray &r, Hit &h) override
+	bool intersect(const Ray& r, Hit& h) override
 	{
 		// Line from origin to center of sphere
 		Vec3 ln = r.origin - center;
@@ -32,7 +32,7 @@ public:
 		float c = Vec3::dot(ln, ln) - radius * radius;
 
 		// Calculate discriminant
-		float dsc = b*b - 4*a*c;
+		float dsc = b * b - 4 * a * c;
 
 		if (dsc >= 0.0f)
 		{
@@ -41,7 +41,7 @@ public:
 			float x1 = -b - dsc_root;
 
 			// Smallest _positive_ distance
-			h.dist = ( (x0 < x1 && x0 > 1e-6) ? x0 : x1 ) / 2.0f;
+			h.dist = ((x0 < x1 && x0 > 1e-6) ? x0 : x1) / 2.0f;
 
 			h.mat = mat;
 			return h.dist > 1e-6;
@@ -50,8 +50,8 @@ public:
 		return false;
 	}
 
-	Vec3 get_normal(const Vec3 &pt) override
+	Vec3 get_normal(const Vec3& pt) override
 	{
-			return (pt - center)/radius;
+		return (pt - center) / radius;
 	}
 };

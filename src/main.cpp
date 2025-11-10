@@ -1,7 +1,7 @@
 // Includes gl - do this first
 #include "util/window.h"
-#include <thread>
 #include <cstring>
+#include <thread>
 
 #include "pathological.h"
 
@@ -13,12 +13,12 @@ const int WIDTH = 640;
 const int HEIGHT = 480;
 const int SPP = 64;
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
 	// Arguments to parse
 	bool benchmark;
 
-    bool help;
+	bool help;
 	int width;
 	int height;
 	int nthreads;
@@ -36,16 +36,16 @@ int main(int argc, char **argv)
 	if (parser.parse() != 0)
 	{
 		fprintf(stderr, "Failed to parse arguments\n");
-        parser.print_help();
+		parser.print_help();
 		return 1;
 	}
 
 	parser.get_arg("help", help, false);
-    if (help)
-    {
-        parser.print_help();
-        return 0;
-    }
+	if (help)
+	{
+		parser.print_help();
+		return 0;
+	}
 
 	parser.get_arg("benchmark", benchmark, false);
 	parser.get_arg("width", width, WIDTH);
@@ -64,19 +64,18 @@ int main(int argc, char **argv)
 	Window win(width, height, "Pathological path tracer");
 
 	Pathological app(width, height, spp, nthreads);
-	void *pixels = app.get_texture();
-	NetPBM exp("traced.ppm", width, height, (Color *)pixels);
+	void* pixels = app.get_texture();
+	NetPBM exp("traced.ppm", width, height, (Color*)pixels);
 
 	app.add_exporter(&exp);
 	std::thread app_thread(&Pathological::run, &app);
 
 	while (!win.should_quit())
 	{
-		win.display_texture(width, height, (char *)pixels);
+		win.display_texture(width, height, (char*)pixels);
 
 		// Update display at 15 FPS
-		std::this_thread::sleep_for(
-			std::chrono::duration<float, std::ratio<1, 1>>(1.0/15.0));
+		std::this_thread::sleep_for(std::chrono::duration<float, std::ratio<1, 1>>(1.0 / 15.0));
 	}
 
 	app.stop();
