@@ -75,11 +75,11 @@ bool test(){
 
     //refer to line 37 for formating on tris coordinates
     CheckVec3Expected(output.V[tris0.v[0]], 0,0,0, "Tri[0] v[0] points to wrong vertex");
-    CheckVec3Expected(output.V[tris0.v[1]], 0,0,0, "Tri[0] v[1] points to wrong vertex");
-    CheckVec3Expected(output.V[tris0.v[2]], 0,0,0, "Tri[0] v[2] points to wrong vertex");
-    CheckVec3Expected(output.V[tris0.vn[0]], 0,0,0, "Tri[0] v[0] points to wrong vertex");
-    CheckVec3Expected(output.V[tris0.vn[1]], 0,0,0, "Tri[0] v[1] points to wrong vertex");
-    CheckVec3Expected(output.V[tris0.vn[2]], 0,0,0, "Tri[0] v[2] points to wrong vertex");
+    CheckVec3Expected(output.V[tris0.v[1]], 0,0,1, "Tri[0] v[1] points to wrong vertex");
+    CheckVec3Expected(output.V[tris0.v[2]], 0,1,0, "Tri[0] v[2] points to wrong vertex");
+    CheckVec3Expected(output.VN[tris0.vn[0]], 0,0,1, "Tri[0] vn[0] points to wrong vertex normal");
+    CheckVec3Expected(output.VN[tris0.vn[1]], 1,0,1, "Tri[0] vn[1] points to wrong vertex normal");
+    CheckVec3Expected(output.VN[tris0.vn[2]], 0,1,1, "Tri[0] vn[2] points to wrong vertex normal");
 
 
     return succeed;
