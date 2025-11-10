@@ -1,7 +1,6 @@
 #pragma once
 
 #include <array>
-#include <iostream>
 
 #include "ray.h"
 #include "renderable.h"
@@ -46,5 +45,15 @@ class Triangle : public Renderable
 	Vec3 get_normal(const Vec3& pt) override
 	{
 		return norm;
+	}
+
+	Vec3 uniform_random_point(RandGen& rng) override
+	{
+		// https://math.stackexchange.com/a/4902929
+		float r1_rt = sqrt(rng.uniform_range(0, 1));
+		float r2 = rng.uniform_range(0, 1);
+
+		Vec3 sample_pt = (1 - r1_rt) * v[0] + (r1_rt * r2) * v[1] + r1_rt * (1 - r2) * v[2];
+		return sample_pt;
 	}
 };

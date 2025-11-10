@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <cassert>
 #include <iostream>
 
 #include "ray.h"
@@ -53,5 +54,10 @@ struct Sphere : public Renderable
 	Vec3 get_normal(const Vec3& pt) override
 	{
 		return (pt - center) / radius;
+	}
+
+	Vec3 uniform_random_point(RandGen& rng) override
+	{
+		return center + radius * RandGen::sample_sphere_uniform(rng);
 	}
 };

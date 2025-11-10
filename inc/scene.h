@@ -12,10 +12,8 @@ class Scene
   private:
 	// TODO: Is this a proper use of unique_ptr?
 	std::vector<Renderable*> renderables;
+	std::vector<Renderable*> emissives;
 
-	// TODO: At the moment all non-ambient light is from emissive objects
-	// add explicit lights at a later time
-	// std::vector<std::unique_ptr<Light>> lights;
 	Color bg;
 
   public:
@@ -41,5 +39,18 @@ class Scene
 	void add_renderable(Renderable* rend)
 	{
 		renderables.push_back(rend);
+		if (rend->is_emissive())
+		{
+			emissives.push_back(rend);
+		}
+	}
+
+	const std::vector<Renderable*>& get_renderables() const
+	{
+		return renderables;
+	}
+	const std::vector<Renderable*>& get_emissives() const
+	{
+		return emissives;
 	}
 };

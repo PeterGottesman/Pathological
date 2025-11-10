@@ -5,9 +5,14 @@
 
 #include "pathological.h"
 
+#include "camera.h"
+#include "renderable/sphere.h"
+#include "renderable/triangle.h"
+#include "scene.h"
 #include "util/argparse.h"
 #include "util/benchmark.h"
 #include "util/exporter.h"
+#include "util/obj_loader.h"
 
 const int WIDTH = 640;
 const int HEIGHT = 480;
@@ -32,6 +37,7 @@ int main(int argc, char** argv)
 	parser.add_arg("height", "Render image height", true, 'h');
 	parser.add_arg("nthreads", "Number of render threads", true, 'n');
 	parser.add_arg("samples", "Number of samples per pixel per frame", true, 's');
+	parser.add_arg("obj", "Path to Wavefront OBJ file", true, 'o');
 
 	if (parser.parse() != 0)
 	{
@@ -52,6 +58,7 @@ int main(int argc, char** argv)
 	parser.get_arg("height", height, HEIGHT);
 	parser.get_arg("nthreads", nthreads, (int)std::thread::hardware_concurrency());
 	parser.get_arg("samples", spp, SPP);
+	parser.get_arg("obj", obj_path, std::string(""));
 
 	if (benchmark)
 	{
