@@ -17,6 +17,7 @@ class Triangle : public Renderable
 
 	/* Triangle face normal and unnormalized version*/
 	Vec3 norm, cross_edges;
+    float area;
 
 public:
 
@@ -29,6 +30,7 @@ public:
 		e[1] = v[0] - v[2];
 		cross_edges = Vec3::cross(e[1], e[0]);
 		norm = Vec3::normalize(cross_edges);
+        area = Vec3::magnitude(cross_edges) * 0.5f;
 	}
 
 	bool intersect(const Ray &r, Hit &h) override
@@ -57,5 +59,9 @@ public:
 
         Vec3 sample_pt = (1-r1_rt) * v[0] + (r1_rt * r2) * v[1] + r1_rt * (1 - r2) * v[2];
         return sample_pt;
+    }
+
+    float get_area() const override {
+      return area;
     }
 };

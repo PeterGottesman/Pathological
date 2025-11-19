@@ -43,7 +43,7 @@ public:
 	Color sample_brdf(const Scene &sc, Hit &hit,
                       const Ray &r, RandGen &rng) const;
 
-	Color sample_light(const Scene &sc, const Ray &r,
+    Color sample_light(const Scene &sc, const Hit &h, const Ray &r,
                        const Vec3 &orig, RandGen &rng) const;
 
 	Color sample(const Scene &sc, Hit &hit,

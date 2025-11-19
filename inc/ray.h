@@ -6,6 +6,7 @@ const int MAX_DEPTH = 5;
 const float MAX_RAY_LENGTH = 100.0;
 
 class Material;
+class Renderable;
 
 struct Hit {
 	float dist;
@@ -14,6 +15,7 @@ struct Hit {
 	Vec3 norm;
 
 	const Material *mat;
+	const Renderable *obj;
 };
 
 struct Ray {

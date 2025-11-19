@@ -104,8 +104,7 @@ int main(int argc, char **argv)
 				
 				}
 				// Material for the mesh
-				Material *glassmat = new Dielectric(1.5);
-				Material* meshmat = new Lambertian({1.0, 1.0, 1.0}, {1.0,1.0,1.0});
+				Material* meshmat = new Lambertian({0.8, 0.7, 0.3}, Color{});
 
 
 
@@ -151,5 +150,9 @@ int main(int argc, char **argv)
 	}
 
 	app.stop();
+    win.display_texture(width, height, (char *)pixels);
+
+    std::this_thread::sleep_for(
+        std::chrono::duration<float, std::ratio<1, 1>>(1.0));
 	app_thread.join();
 }

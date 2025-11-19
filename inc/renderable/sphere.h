@@ -59,4 +59,8 @@ public:
     Vec3 uniform_random_point(RandGen& rng) override {
       return center + radius * RandGen::sample_sphere_uniform(rng);
     }
+
+    float get_area() const override {
+      return 4 * M_PI * radius * radius;
+    }
 };

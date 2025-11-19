@@ -3,7 +3,7 @@
 
 void RenderThread::run(void)
 {
-	while (running)
+  //while (running)
 	{
 		render_region();
 	}
@@ -36,7 +36,7 @@ void RenderThread::render_region(void)
 			Color col(0.0);
 			for (unsigned s = 0; s < spp; ++s)
 			{
-				if (!running) return;
+              if (!running) return;
 
 				col += calc_pixel(x, y, offsets[s]);
 			}

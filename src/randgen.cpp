@@ -1,5 +1,27 @@
 #include "randgen.h"
 
+Vec3 RandGen::sample_hemisphere_cosine(const Vec3 &norm, RandGen &rg)
+{
+    // Unit vector that isn't collinear with norm, use to create basis
+    Vec3 not_norm = std::abs(norm.x) > 0.9
+        ? Vec3(0.0, 1.0, 0.0) : Vec3(1.0, 0.0, 0.0);
+
+    // Coordinate system around norm
+    Vec3 y_axis = Vec3::normalize(Vec3::cross(norm, not_norm));
+    Vec3 x_axis = Vec3::cross(y_axis, norm);
+    
+    // Cosine-weighted sampling using Malley's method
+    // Sample a disk uniformly, then project up to hemisphere
+    float r = std::sqrt(rg.uniform());
+    float theta = 2 * M_PI * rg.uniform();
+    
+    float x = r * std::cos(theta);
+    float y = r * std::sin(theta);
+    float z = std::sqrt(std::max(0.0f, 1.0f - x*x - y*y));
+    
+    return x * x_axis + y * y_axis + z * norm;
+}
+
 Vec3 RandGen::sample_hemisphere_uniform(const Vec3 &norm, RandGen &rg)
 {
 	// Unit vector that isn't collinear with norm, use to create basis
