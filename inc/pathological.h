@@ -90,4 +90,12 @@ class Pathological
 
 	// TODO: Scene, obj, etc loaders
 	static bool load_default_scene(Scene& sc, Camera& cam);
+	Scene& get_scene()
+	{
+		return sc;
+	}
+	Camera& get_camera()
+	{
+		return cam;
+	}
 };
